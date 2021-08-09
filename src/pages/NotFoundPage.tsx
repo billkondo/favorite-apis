@@ -12,7 +12,9 @@ const NotFoundPage = () => {
 
       <Row justify="center">
         <Col>
-          <Title level={4}>This page does not exist</Title>
+          <Title level={4} style={{ textAlign: 'center' }}>
+            This page does not exist
+          </Title>
         </Col>
       </Row>
     </>
