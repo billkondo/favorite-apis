@@ -1,6 +1,6 @@
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 //
-// Some libraries (e.g. React Router) use window.matchMedia in their implementation
+// Some libraries (e.g. React Ant Design) use window.matchMedia in their implementation
 // This script mocks it in the tests environment
 
 const mockMatchMedia = () =>

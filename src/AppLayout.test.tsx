@@ -20,7 +20,7 @@ describe('AppLayout', () => {
     );
   };
 
-  // In React And Design, when a menu item is selected,
+  // In React Ant Design, when a menu item is selected,
   // it has the class 'ant-menu-item-selected'
   const elementHasSelectedClass = (element: HTMLElement) => {
     const classes = element.className.split(' ');
