@@ -4,7 +4,9 @@ import GITHUB_KEY from './keyGitHub';
 import renderButtonGitHub from './renderButtonGitHub';
 import searchGitHub from './searchGitHub';
 
-const GitHubApiSource: ApiSourceType = {
+import GitHubItemType from './GitHubItemType';
+
+const GitHubApiSource: ApiSourceType<GitHubItemType> = {
   key: GITHUB_KEY,
   renderButton: renderButtonGitHub,
   search: searchGitHub,

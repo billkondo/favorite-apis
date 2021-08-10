@@ -1,10 +1,11 @@
+import QueryResultType from 'domain/query/QueryResultType';
 import QueryType from 'domain/query/QueryType';
 
-type ApiSourceType = {
+type ApiSourceType<T> = {
   key: string;
   renderButton: (onClick: () => void) => JSX.Element;
 
-  search: (query?: QueryType) => Promise<void>;
+  search: (query?: QueryType) => Promise<QueryResultType<T>>;
 };
 
 export default ApiSourceType;

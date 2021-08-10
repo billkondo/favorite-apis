@@ -54,6 +54,7 @@ const useSubmit = <T>(
   return {
     submit,
     loading: status === LOADING,
+    done: status === DONE,
   };
 };
 
