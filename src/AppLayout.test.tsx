@@ -3,11 +3,15 @@ import { MemoryRouter } from 'react-router-dom';
 
 import Routes from 'config/routes';
 
+import mockMatchMedia from 'mocks/matchMedia';
+
 import AppLayout from 'AppLayout';
 
 describe('AppLayout', () => {
   const setup = (params = { initialRoute: '/' }) => {
     const { initialRoute } = params;
+
+    mockMatchMedia();
 
     render(
       <MemoryRouter initialEntries={[initialRoute]}>

@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { Layout, Menu } from 'antd';
+import { Button, Col, Layout, Menu, Row } from 'antd';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import APP_NAME from 'config/app_name';
@@ -23,22 +23,38 @@ const AppLayout: FC = ({ children }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[selectedKey]}>
-          <Menu.Item key="1" title="APIs">
-            <Link to={Routes.HOME}>APIs</Link>
-          </Menu.Item>
+        <Row justify="space-between">
+          <Col>
+            <Menu theme="dark" mode="horizontal" selectedKeys={[selectedKey]}>
+              <Menu.Item key="1" title="APIs">
+                <Link to={Routes.HOME}>APIs</Link>
+              </Menu.Item>
 
-          <Menu.Item key="2" title="Favorites">
-            <Link to={Routes.FAVORITES}>Favorites</Link>
-          </Menu.Item>
-        </Menu>
+              <Menu.Item key="2" title="Favorites">
+                <Link to={Routes.FAVORITES}>Favorites</Link>
+              </Menu.Item>
+            </Menu>
+          </Col>
+
+          <Col>
+            <Link to={Routes.LOGIN}>
+              <Button ghost>Login</Button>
+            </Link>
+
+            <Link to={Routes.REGISTER}>
+              <Button style={{ marginLeft: 16 }}>Register</Button>
+            </Link>
+          </Col>
+        </Row>
       </Header>
 
-      <Content style={{ padding: '0 50px', marginTop: 64 }}>
+      <Content style={{ padding: '0 50px', marginTop: 64, width: '100%' }}>
         <div style={{ padding: 24, minHeight: '100%' }}>{children}</div>
       </Content>
 
-      <Footer style={{ textAlign: 'center' }}>{APP_NAME} ©2021</Footer>
+      <Footer style={{ textAlign: 'center', width: '100%' }}>
+        {APP_NAME} ©2021
+      </Footer>
     </Layout>
   );
 };
