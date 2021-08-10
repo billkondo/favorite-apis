@@ -6,6 +6,7 @@ import ApisPage from 'pages/apis/ApisPage';
 import FavoritesPage from 'pages/favorites/FavoritesPage';
 import LoginPage from 'pages/login/LoginPage';
 import RegisterPage from 'pages/register/RegisterPage';
+import LogoutPage from 'pages/logout/LogoutPage';
 import NotFoundPage from 'pages/NotFoundPage';
 
 import AppLayout from 'AppLayout';
@@ -28,6 +29,10 @@ const App = () => {
 
         <Route path={Routes.REGISTER} exact>
           <RegisterPage></RegisterPage>
+        </Route>
+
+        <Route path={Routes.LOGOUT} exact>
+          <LogoutPage></LogoutPage>
         </Route>
 
         <Route>

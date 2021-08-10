@@ -9,7 +9,7 @@ import Routes from 'config/routes';
 import UseCasesProvider from 'domain/usecases/UseCasesProvider';
 import AuthenticationProvider from 'domain/authentication/AuthenticationProvider';
 
-import authenticationUseCases from 'domain/authentication/usecases/authentication_usecases';
+import AuthenticationUseCases from 'domain/authentication/usecases/authentication_usecases';
 
 import LoginForm from './LoginForm';
 
@@ -23,11 +23,18 @@ jest.mock('domain/authentication/usecases/authentication_usecases', () =>
 );
 
 describe('LoginForm', () => {
+  beforeEach(() => {
+    // Disable console.warn for this test suit as async-validator
+    // shows error messages as user types on the field
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+
   const setup = async () => {
     mockMatchMedia();
 
-    (authenticationUseCases as jest.Mock).mockImplementation(() => ({
+    (AuthenticationUseCases as jest.Mock).mockImplementation(() => ({
       loginUseCase: async () => ({ email: 'email' }),
+      readPersistedUserUseCase: () => null,
     }));
 
     const push = jest.fn();

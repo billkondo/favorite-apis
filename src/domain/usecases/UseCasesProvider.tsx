@@ -10,7 +10,7 @@ const UseCasesProvider: FC = ({ children }) => {
   return (
     <UseCasesContext.Provider
       value={{
-        authentication: authenticationUseCases,
+        authenticationUseCases: authenticationUseCases,
       }}
     >
       {children}

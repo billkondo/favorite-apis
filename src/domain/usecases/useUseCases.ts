@@ -3,9 +3,9 @@ import { useContext } from 'react';
 import UseCasesContext from './UseCasesContext';
 
 const useUseCases = () => {
-  const { authentication } = useContext(UseCasesContext);
+  const { authenticationUseCases } = useContext(UseCasesContext);
 
-  return { authentication: authentication! };
+  return { authenticationUseCases: authenticationUseCases! };
 };
 
 export default useUseCases;

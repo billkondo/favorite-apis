@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import UserType from 'domain/user/UserType';
 import useUseCases from 'domain/usecases/useUseCases';
@@ -7,21 +7,32 @@ import AuthenticationContext from './AuthenticationContext';
 import LoginFormType from './LoginFormType';
 
 const AuthenticationProvider: FC = ({ children }) => {
-  const { authentication } = useUseCases();
+  const { authenticationUseCases } = useUseCases();
 
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(
+    authenticationUseCases.readPersistedUserUseCase()
+  );
 
-  const login = async (form: LoginFormType) => {
-    const user = await authentication.loginUseCase(form);
-    setCurrentUser(user);
-  };
+  const login = useCallback(
+    async (form: LoginFormType) => {
+      const user = await authenticationUseCases.loginUseCase(form);
+      setCurrentUser(user);
+    },
+    [authenticationUseCases]
+  );
+
+  const logout = useCallback(async () => {
+    await authenticationUseCases.logoutUseCase();
+    setCurrentUser(null);
+  }, [authenticationUseCases]);
 
   return (
     <AuthenticationContext.Provider
       value={{
+        currentUser: currentUser,
         authenticated: !!currentUser,
         login: login,
-        currentUser: currentUser,
+        logout: logout,
       }}
     >
       {children}
