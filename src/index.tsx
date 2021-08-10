@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css';
 
+import UseCasesProvider from 'domain/usecases/UseCasesProvider';
+import AuthenticationProvider from 'domain/authentication/AuthenticationProvider';
+
 import App from 'App';
 import AppRouter from 'AppRouter';
 
@@ -11,9 +14,13 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppRouter>
-      <App />
-    </AppRouter>
+    <UseCasesProvider>
+      <AuthenticationProvider>
+        <AppRouter>
+          <App />
+        </AppRouter>
+      </AuthenticationProvider>
+    </UseCasesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

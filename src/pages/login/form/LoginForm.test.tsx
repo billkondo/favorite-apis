@@ -27,11 +27,11 @@ describe('LoginForm', () => {
   test('it should disable submit button when form is submitting', async () => {
     setup();
 
-    const usernameInput = await screen.findByLabelText('Username');
+    const emailInput = await screen.findByLabelText('Email');
     const passwordInput = await screen.findByLabelText('Password');
     const submitButton = await screen.findByTitle('login-form-submit-button');
 
-    userEvent.type(usernameInput, 'username');
+    userEvent.type(emailInput, 'email');
     userEvent.type(passwordInput, 'password');
     userEvent.click(submitButton);
 

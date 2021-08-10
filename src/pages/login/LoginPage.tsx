@@ -10,12 +10,12 @@ const LoginPage = () => {
   return (
     <>
       <Row justify="center">
-        <Title>
+        <Title level={4}>
           Enter in <span style={{ color: red[8] }}>{APP_NAME}</span>
         </Title>
       </Row>
 
-      <Row justify="center" style={{ marginTop: 40 }}>
+      <Row justify="center" style={{ marginTop: 16 }}>
         <LoginForm></LoginForm>
       </Row>
     </>

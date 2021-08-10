@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd';
 import useLoginForm from './useLoginForm';
 
 const LoginForm = () => {
-  const { onSubmit, submitting } = useLoginForm();
+  const { onSubmit, loading } = useLoginForm();
 
   return (
     <Form
@@ -13,9 +13,9 @@ const LoginForm = () => {
       onFinish={onSubmit}
     >
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: 'Username should not be empty' }]}
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Email should not be empty' }]}
       >
         <Input />
       </Form.Item>
@@ -36,7 +36,7 @@ const LoginForm = () => {
         <Button
           type="primary"
           htmlType="submit"
-          loading={submitting}
+          loading={loading}
           title="login-form-submit-button"
         >
           Submit
