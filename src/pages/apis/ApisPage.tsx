@@ -1,22 +1,33 @@
-import { Col, Row } from 'antd';
-import Title from 'antd/lib/typography/Title';
+import ApisPageSearchList from './search_list/ApisPageSearchList';
+import ApisPageSourceOptions from './source_options/ApisPageSourceOptions';
 
-import ApiSources from 'api_sources';
+import useApisPage from './useApisPage';
 
 const ApisPage = () => {
+  const {
+    selectedApiSourceKey,
+
+    showApiSourceOptions,
+    showApiSourceSearchList,
+
+    selectApiSourceKey,
+    unselectApiSourceKey,
+  } = useApisPage();
+
   return (
     <>
-      <Row>
-        <Title level={2}>Select a API source</Title>
-      </Row>
+      {showApiSourceOptions && (
+        <ApisPageSourceOptions
+          selectApiSourceKey={selectApiSourceKey}
+        ></ApisPageSourceOptions>
+      )}
 
-      <Row gutter={24} style={{ marginTop: 24 }}>
-        {ApiSources.map((apiSource) => {
-          return (
-            <Col key={apiSource.key}>{apiSource.renderButton(() => {})}</Col>
-          );
-        })}
-      </Row>
+      {showApiSourceSearchList && (
+        <ApisPageSearchList
+          selectedKey={selectedApiSourceKey!}
+          unselectKey={unselectApiSourceKey}
+        ></ApisPageSearchList>
+      )}
     </>
   );
 };
