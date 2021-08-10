@@ -4,11 +4,15 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
 
+import useApisPageSearchList from './useApisPageSearchList';
+
 type Props = {
   selectedKey: string;
   unselectKey: () => void;
 };
 const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
+  useApisPageSearchList(selectedKey);
+
   return (
     <>
       <Row align="middle" gutter={24}>
