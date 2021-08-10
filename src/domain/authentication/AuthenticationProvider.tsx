@@ -21,6 +21,7 @@ const AuthenticationProvider: FC = ({ children }) => {
       value={{
         authenticated: !!currentUser,
         login: login,
+        currentUser: currentUser,
       }}
     >
       {children}

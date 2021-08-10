@@ -1,17 +1,45 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 import Routes from 'config/routes';
 
 import mockMatchMedia from 'mocks/matchMedia';
 
+import useAuthentication from 'domain/authentication/useAuthentication';
+
 import AppLayout from 'AppLayout';
 
+jest.mock('domain/authentication/useAuthentication', () => jest.fn());
+
+type TestParams = {
+  initialRoute?: string;
+  authenticated?: boolean;
+};
+
 describe('AppLayout', () => {
-  const setup = (params = { initialRoute: '/' }) => {
-    const { initialRoute } = params;
+  const MOCKED_EMAIL = 'mocked-email@gmail.com';
+
+  const setup = (
+    params: TestParams = { initialRoute: '/', authenticated: false }
+  ) => {
+    const { initialRoute = '/', authenticated = false } = params;
 
     mockMatchMedia();
+
+    (useAuthentication as jest.Mock).mockImplementation(() => {
+      if (!authenticated)
+        return {
+          authenticated: false,
+        };
+
+      return {
+        authenticated: true,
+        currentUser: {
+          email: MOCKED_EMAIL,
+        },
+      };
+    });
 
     render(
       <MemoryRouter initialEntries={[initialRoute]}>
@@ -70,5 +98,27 @@ describe('AppLayout', () => {
     const favoritesItem = await waitFor(() => screen.findByTitle('Favorites'));
     expect(favoritesItem).toBeVisible();
     expect(elementHasSelectedClass(favoritesItem)).toBe(false);
+  });
+
+  test('it should show authentication buttons when there is no authenticated user', async () => {
+    setup();
+
+    const loginButton = await screen.findByTitle('Login Button');
+    const registerButton = await screen.findByTitle('Register Button');
+
+    expect(loginButton).toBeVisible();
+    expect(registerButton).toBeVisible();
+  });
+
+  test('it should show profile button when user is authenticated', async () => {
+    setup({ authenticated: true });
+
+    const profileButton = await screen.findByTitle('Profile Button');
+    expect(profileButton).toBeVisible();
+
+    userEvent.click(profileButton);
+
+    const emailText = await screen.findByText(MOCKED_EMAIL);
+    expect(emailText).toBeInTheDocument();
   });
 });

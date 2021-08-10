@@ -5,9 +5,16 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import APP_NAME from 'config/app_name';
 import Routes from 'config/routes';
 
+import ProfileButton from 'components/ProfileButton';
+
+import useAuthentication from 'domain/authentication/useAuthentication';
+
 const { Header, Content, Footer } = Layout;
 
 const AppLayout: FC = ({ children }) => {
+  const { authenticated, currentUser } = useAuthentication();
+  const email = currentUser ? currentUser.email : '';
+
   const inApiRoute = !!useRouteMatch({ path: Routes.HOME, exact: true });
   const inFavoritesRoute = !!useRouteMatch({
     path: Routes.FAVORITES,
@@ -37,13 +44,8 @@ const AppLayout: FC = ({ children }) => {
           </Col>
 
           <Col>
-            <Link to={Routes.LOGIN}>
-              <Button ghost>Login</Button>
-            </Link>
-
-            <Link to={Routes.REGISTER}>
-              <Button style={{ marginLeft: 16 }}>Register</Button>
-            </Link>
+            {!authenticated && <AuthenticationButtons></AuthenticationButtons>}
+            {authenticated && <ProfileButton email={email}></ProfileButton>}
           </Col>
         </Row>
       </Header>
@@ -56,6 +58,24 @@ const AppLayout: FC = ({ children }) => {
         {APP_NAME} ©2021
       </Footer>
     </Layout>
+  );
+};
+
+const AuthenticationButtons = () => {
+  return (
+    <>
+      <Link to={Routes.LOGIN}>
+        <Button ghost title="Login Button">
+          Login
+        </Button>
+      </Link>
+
+      <Link to={Routes.REGISTER}>
+        <Button title="Register Button" style={{ marginLeft: 16 }}>
+          Register
+        </Button>
+      </Link>
+    </>
   );
 };
 
