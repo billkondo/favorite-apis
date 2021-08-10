@@ -3,6 +3,7 @@ const Routes = {
   FAVORITES: '/favorites',
   LOGIN: '/login',
   REGISTER: '/register',
+  LOGOUT: '/logout',
 };
 
 export default Routes;
