@@ -47,7 +47,7 @@ describe('LoginForm', () => {
     const passwordInput = await screen.findByLabelText('Password');
     const submitButton = await screen.findByTitle('login-form-submit-button');
 
-    userEvent.type(emailInput, 'email');
+    userEvent.type(emailInput, 'email@gmail.com');
     userEvent.type(passwordInput, 'password');
     userEvent.click(submitButton);
 

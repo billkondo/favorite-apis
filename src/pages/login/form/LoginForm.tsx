@@ -15,7 +15,10 @@ const LoginForm = () => {
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Email should not be empty' }]}
+        rules={[
+          { required: true, message: 'Email should not be empty' },
+          { type: 'email', message: 'Email is invalid' },
+        ]}
       >
         <Input />
       </Form.Item>
