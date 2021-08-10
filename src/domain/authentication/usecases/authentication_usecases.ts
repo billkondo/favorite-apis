@@ -1,7 +1,11 @@
 import loginUseCase from './login_usecase';
 
-const authenticationUseCases = {
+const AuthenticationUseCases = () => ({
   loginUseCase,
-};
+});
 
-export default authenticationUseCases;
+export type AuthenticationUseCasesType = ReturnType<
+  typeof AuthenticationUseCases
+>;
+
+export default AuthenticationUseCases;

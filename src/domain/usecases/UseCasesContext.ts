@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-import authenticationUseCases from 'domain/authentication/usecases/authentication_usecases';
+import { AuthenticationUseCasesType } from 'domain/authentication/usecases/authentication_usecases';
 
 type UseCasesContextType = {
-  authentication?: typeof authenticationUseCases;
+  authentication?: AuthenticationUseCasesType;
 };
 const UseCasesContext = createContext<UseCasesContextType>({});
 
