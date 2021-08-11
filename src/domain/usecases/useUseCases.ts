@@ -3,9 +3,13 @@ import { useContext } from 'react';
 import UseCasesContext from './UseCasesContext';
 
 const useUseCases = () => {
-  const { authenticationUseCases } = useContext(UseCasesContext);
+  const { authenticationUseCases, favoritedUseCases } =
+    useContext(UseCasesContext);
 
-  return { authenticationUseCases: authenticationUseCases! };
+  return {
+    authenticationUseCases: authenticationUseCases!,
+    favoritedUseCases: favoritedUseCases!,
+  };
 };
 
 export default useUseCases;

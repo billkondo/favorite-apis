@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 
 import UseCasesProvider from 'domain/usecases/UseCasesProvider';
 import AuthenticationProvider from 'domain/authentication/AuthenticationProvider';
+import FavoritedProvider from 'domain/favorited/FavoritedProvider';
 
 import App from 'App';
 import AppRouter from 'AppRouter';
@@ -16,9 +17,11 @@ ReactDOM.render(
   <React.StrictMode>
     <UseCasesProvider>
       <AuthenticationProvider>
-        <AppRouter>
-          <App />
-        </AppRouter>
+        <FavoritedProvider>
+          <AppRouter>
+            <App />
+          </AppRouter>
+        </FavoritedProvider>
       </AuthenticationProvider>
     </UseCasesProvider>
   </React.StrictMode>,
