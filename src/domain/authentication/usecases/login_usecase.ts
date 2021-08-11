@@ -4,11 +4,11 @@ import UserType from 'domain/user/UserType';
 const loginUseCase = async (form: LoginFormType): Promise<UserType> => {
   const { email } = form;
 
-  const user: UserType = { email };
+  const user: UserType = { id: '1', email };
 
   localStorage.setItem('user', JSON.stringify(user));
 
-  return { email };
+  return user;
 };
 
 export default loginUseCase;
