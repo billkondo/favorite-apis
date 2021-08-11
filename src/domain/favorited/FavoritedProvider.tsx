@@ -10,17 +10,26 @@ import FavoritedContext from './FavoritedContext';
 
 const FavoritedProvider: FC = ({ children }) => {
   const { favoritedUseCases } = useUseCases();
-  const { authenticated, currentUser } = useAuthentication();
+  const { authenticated } = useAuthentication();
 
   const [favoritedList, setFavoritedList] = useState<Array<any>>([]);
   const [favoritedMap, setFavoritedMap] = useState<{ [key: string]: any }>({});
 
-  const { done, loading, submit } = useSubmit(async () => {
-    const favoritedItems = await delayed(
-      favoritedUseCases.listFavoritedItemsUseCase(currentUser!)
-    );
-    return favoritedItems;
-  });
+  const { done, loading, submit } = useSubmit(
+    async () => {
+      const favoritedItems = await delayed(
+        favoritedUseCases.listFavoritedItemsUseCase()
+      );
+      return favoritedItems;
+    },
+    (favoritedItems) => {
+      const initialMap: { [key: string]: any } = {};
+      for (const item of favoritedItems) initialMap[item.id] = item;
+
+      setFavoritedMap(initialMap);
+      setFavoritedList(favoritedItems);
+    }
+  );
 
   useEffect(() => {
     if (authenticated) submit();
@@ -40,7 +49,7 @@ const FavoritedProvider: FC = ({ children }) => {
   const favoriteItem = useCallback(
     async (item: any) => {
       const favorited = await delayed(
-        favoritedUseCases.favoriteItemUseCase(currentUser!)(item)
+        favoritedUseCases.favoriteItemUseCase(item)
       );
 
       if (favorited) {
@@ -68,7 +77,7 @@ const FavoritedProvider: FC = ({ children }) => {
         });
       }
     },
-    [currentUser, favoritedUseCases]
+    [favoritedUseCases]
   );
 
   return (

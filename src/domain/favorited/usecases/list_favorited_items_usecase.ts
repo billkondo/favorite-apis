@@ -1,7 +1,9 @@
-import UserType from 'domain/user/UserType';
+import FavoriteService from 'services/favorite/FavoriteService';
 
-const listFavoritedItemsUseCase = async (user: UserType) => {
-  console.log('list', user);
-};
+const listFavoritedItemsUseCase =
+  (favoriteService: FavoriteService) => async () => {
+    const favoritedItems = await favoriteService.list();
+    return favoritedItems;
+  };
 
 export default listFavoritedItemsUseCase;

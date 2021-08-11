@@ -1,9 +1,10 @@
-import UserType from 'domain/user/UserType';
+import FavoriteService from 'services/favorite/FavoriteService';
 
 const favoriteItemUseCase =
-  (user: UserType) =>
+  (favoriteService: FavoriteService) =>
   async (item: any): Promise<boolean> => {
-    return true;
+    const favorited = await favoriteService.favorite(item);
+    return favorited;
   };
 
 export default favoriteItemUseCase;
