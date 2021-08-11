@@ -1,9 +1,10 @@
 import QueryResultType from 'domain/query/QueryResultType';
-import QueryType from 'domain/query/QueryType';
-
-import GitHubItemType from './GitHubItemType';
 
 import GITHUB_KEY from './keyGitHub';
+
+import GitHubItemType from './GitHubItemType';
+import GitHubForm from './GitHubForm';
+
 import apiCallGitHub from './apiCallGitHub';
 
 type GitHubResponseItem = {
@@ -22,9 +23,20 @@ type GitHubResponse = {
 };
 
 const searchGitHub = async (
-  query?: QueryType
+  query: GitHubForm = { name: 'react', sortBy: '' }
 ): Promise<QueryResultType<GitHubItemType>> => {
-  const queryString = 'q=react';
+  const { name = 'react', sortBy = '' } = query;
+
+  let queryString = `q=${name}`;
+
+  if (sortBy) {
+    const params = sortBy.split(':');
+
+    const sort = params[0];
+    const order = params[1];
+
+    queryString += `&sort=${sort}&order=${order}`;
+  }
 
   const response = await apiCallGitHub(queryString);
 

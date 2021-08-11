@@ -11,6 +11,7 @@ jest.mock('pages/apis/search_list/useApisPageSearchList', () => ({
     totalCount: 0,
     items: [],
     renderItem: () => <></>,
+    renderSearchBar: () => <></>,
   }),
 }));
 

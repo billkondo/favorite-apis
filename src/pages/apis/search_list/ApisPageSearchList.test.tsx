@@ -61,14 +61,14 @@ describe('ApisPageSearchList', () => {
   test('it should search without query parameters when it first load and GitHub is selected', async () => {
     const { searchGitHubMock } = setup();
 
-    await waitFor(() => expect(searchGitHubMock).toBeCalledWith());
+    await waitFor(() => expect(searchGitHubMock).toBeCalledWith(''));
     expect(searchGitHubMock).toBeCalledTimes(1);
   });
 
   test('it should search without query parameters when it first load and Spotify is selected', async () => {
     const { searchSpotifyMock } = setup({ apiSourceKey: SpotifyApiSource.key });
 
-    await waitFor(() => expect(searchSpotifyMock).toBeCalledWith());
+    await waitFor(() => expect(searchSpotifyMock).toBeCalledWith(''));
     expect(searchSpotifyMock).toBeCalledTimes(1);
   });
 

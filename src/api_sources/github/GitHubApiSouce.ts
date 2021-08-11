@@ -1,17 +1,22 @@
 import ApiSourceType from 'api_sources/ApiSourceType';
 
-import GITHUB_KEY from './keyGitHub';
-import renderButtonGitHub from './renderButtonGitHub';
-import renderItemGitHub from './renderItemGitHub';
-import searchGitHub from './searchGitHub';
-
+import GitHubForm from './GitHubForm';
 import GitHubItemType from './GitHubItemType';
 
-const GitHubApiSource: ApiSourceType<GitHubItemType> = {
+import GITHUB_KEY from './keyGitHub';
+
+import renderButtonGitHub from './renderButtonGitHub';
+import renderItemGitHub from './renderItemGitHub';
+import renderSearchBarGitHub from './renderSearchBarGitHub';
+
+import searchGitHub from './searchGitHub';
+
+const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
 
   renderButton: renderButtonGitHub,
   renderItem: renderItemGitHub,
+  renderSearchBar: renderSearchBarGitHub,
 
   search: searchGitHub,
 };

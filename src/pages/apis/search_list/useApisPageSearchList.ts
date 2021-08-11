@@ -10,9 +10,11 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   const [totalCount, setTotalCount] = useState<number>();
   const [items, setItems] = useState<Array<any>>([]);
 
+  const [query, setQuery] = useState('');
+
   const { submit, loading, done } = useSubmit(
     async () => {
-      const queryResult = await apiSource.search();
+      const queryResult = await apiSource.search(query);
       return queryResult;
     },
     (queryResult) => {
@@ -28,11 +30,19 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const filter = (newQuery: any) => {
+    setQuery(newQuery);
+    submit();
+  };
+
   return {
     totalCount,
     items,
 
     renderItem: apiSource.renderItem,
+    renderSearchBar: apiSource.renderSearchBar,
+
+    filter,
 
     loading,
     done,

@@ -13,8 +13,18 @@ type Props = {
   unselectKey: () => void;
 };
 const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
-  const { totalCount, renderItem, items, loading, done } =
-    useApisPageSearchList(selectedKey);
+  const {
+    totalCount,
+    items,
+
+    renderItem,
+    renderSearchBar,
+
+    filter,
+
+    loading,
+    done,
+  } = useApisPageSearchList(selectedKey);
 
   return (
     <>
@@ -35,6 +45,10 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
             <b>{selectedKey}</b> API
           </Text>
         </Col>
+      </Row>
+
+      <Row style={{ padding: 48, paddingBottom: 0 }}>
+        {renderSearchBar(filter, loading)}
       </Row>
 
       {loading && (
