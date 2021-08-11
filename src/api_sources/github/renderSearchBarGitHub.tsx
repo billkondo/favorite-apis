@@ -1,22 +1,11 @@
-import { Button, Form, Input, Select } from 'antd';
-import {
-  SearchOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-} from '@ant-design/icons';
-
-import GitHubForm from './GitHubForm';
+import { Form, Input, Select } from 'antd';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const { Option, OptGroup } = Select;
 
-const renderSearchBarGitHub = (
-  filter: (form: GitHubForm) => void,
-  loading: boolean
-) => {
-  const onSubmit = (form: GitHubForm) => filter(form);
-
+const renderSearchBarGitHub = () => {
   return (
-    <Form layout="inline" onFinish={onSubmit}>
+    <>
       <Form.Item label="Name" name="name">
         <Input placeholder="React"></Input>
       </Form.Item>
@@ -42,17 +31,7 @@ const renderSearchBarGitHub = (
           </OptGroup>
         </Select>
       </Form.Item>
-
-      <Form.Item>
-        <Button
-          loading={loading}
-          htmlType="submit"
-          type="primary"
-          shape="circle"
-          icon={<SearchOutlined></SearchOutlined>}
-        ></Button>
-      </Form.Item>
-    </Form>
+    </>
   );
 };
 

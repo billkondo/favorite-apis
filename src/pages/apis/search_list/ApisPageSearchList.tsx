@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Button, Col, Divider, Pagination, Row, Spin } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Button, Col, Divider, Form, Pagination, Row, Spin } from 'antd';
+import { ArrowLeftOutlined, SearchOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
 
@@ -58,7 +58,19 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
       </Row>
 
       <Row style={{ padding: 48, paddingBottom: 0 }}>
-        {renderSearchBar(filter, loading)}
+        <Form layout="inline" onFinish={filter}>
+          {renderSearchBar()}
+
+          <Form.Item>
+            <Button
+              loading={loading}
+              htmlType="submit"
+              type="primary"
+              shape="circle"
+              icon={<SearchOutlined />}
+            ></Button>
+          </Form.Item>
+        </Form>
       </Row>
 
       {!hidePagination && (
