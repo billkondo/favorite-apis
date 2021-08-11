@@ -5,6 +5,7 @@ type FavoritedContextType = {
   favoritedMap: { [key: string]: any };
 
   isFavorited?: (id: string) => boolean;
+  favoriteItem?: (item: any) => Promise<void>;
 
   done: boolean;
   loading: boolean;

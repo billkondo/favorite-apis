@@ -37,6 +37,40 @@ const FavoritedProvider: FC = ({ children }) => {
     [favoritedMap]
   );
 
+  const favoriteItem = useCallback(
+    async (item: any) => {
+      const favorited = await delayed(
+        favoritedUseCases.favoriteItemUseCase(currentUser!)(item)
+      );
+
+      if (favorited) {
+        setFavoritedList((oldList) => oldList.concat(item));
+        setFavoritedMap((oldMap) => {
+          const newMap = {
+            ...oldMap,
+            [item.id]: item,
+          };
+
+          return newMap;
+        });
+      } else {
+        setFavoritedList((oldList) =>
+          oldList.filter((oldItem) => oldItem.id !== item.id)
+        );
+        setFavoritedMap((oldMap) => {
+          const newMap = {
+            ...oldMap,
+          };
+
+          delete newMap[item.id];
+
+          return newMap;
+        });
+      }
+    },
+    [currentUser, favoritedUseCases]
+  );
+
   return (
     <FavoritedContext.Provider
       value={{
@@ -44,6 +78,7 @@ const FavoritedProvider: FC = ({ children }) => {
         favoritedMap,
 
         isFavorited,
+        favoriteItem,
 
         done,
         loading,
