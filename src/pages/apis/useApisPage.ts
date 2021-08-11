@@ -3,12 +3,17 @@ import { useState } from 'react';
 const useApisPage = () => {
   const [selectedApiSourceKey, setSelectedApiSourceKey] = useState<
     string | null
-  >(null);
+  >(localStorage.getItem('api-source-key'));
 
-  const selectApiSourceKey = (apiSourceKey: string) =>
+  const selectApiSourceKey = (apiSourceKey: string) => {
     setSelectedApiSourceKey(apiSourceKey);
+    localStorage.setItem('api-source-key', apiSourceKey);
+  };
 
-  const unselectApiSourceKey = () => setSelectedApiSourceKey(null);
+  const unselectApiSourceKey = () => {
+    setSelectedApiSourceKey(null);
+    localStorage.removeItem('api-source-key');
+  };
 
   return {
     selectedApiSourceKey,
