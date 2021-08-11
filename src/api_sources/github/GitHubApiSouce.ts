@@ -16,6 +16,9 @@ const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
 
   apiName: 'GitHub',
 
+  defaultPageSize: 25,
+  pageSizes: ['25', '50', '100'],
+
   renderButton: renderButtonGitHub,
   renderItem: renderItemGitHub,
   renderSearchBar: renderSearchBarGitHub,

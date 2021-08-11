@@ -31,6 +31,8 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
     page,
     pageSize,
+    pagesSize,
+    hidePagination,
     repaginate,
   } = useApisPageSearchList(selectedKey);
 
@@ -59,17 +61,19 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
         {renderSearchBar(filter, loading)}
       </Row>
 
-      <Row style={{ padding: 48, paddingBottom: 0 }}>
-        <Pagination
-          current={page}
-          total={totalCount}
-          defaultPageSize={pageSize}
-          disabled={loading}
-          pageSizeOptions={['25', '50', '100']}
-          onChange={repaginate(pageSize)}
-          onShowSizeChange={(page, pageSize) => repaginate(pageSize)(page)}
-        ></Pagination>
-      </Row>
+      {!hidePagination && (
+        <Row style={{ padding: 48, paddingBottom: 0 }}>
+          <Pagination
+            current={page}
+            total={totalCount}
+            defaultPageSize={pageSize}
+            disabled={loading}
+            pageSizeOptions={pagesSize}
+            onChange={repaginate(pageSize)}
+            onShowSizeChange={(page, pageSize) => repaginate(pageSize)(page)}
+          ></Pagination>
+        </Row>
+      )}
 
       {loading && (
         <Row style={{ padding: 48 }}>

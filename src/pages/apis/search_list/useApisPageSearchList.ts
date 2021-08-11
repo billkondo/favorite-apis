@@ -13,7 +13,9 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   const [query, setQuery] = useState<any>({});
 
   const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(25);
+  const [pageSize, setPageSize] = useState<number>(
+    apiSource.defaultPageSize || 25
+  );
 
   const { submit, loading, done } = useSubmit(
     async () => {
@@ -66,6 +68,8 @@ const useApisPageSearchList = (apiSourceKey: string) => {
 
     page,
     pageSize,
+    pagesSize: apiSource.pageSizes || [],
+    hidePagination: !apiSource.pageSizes,
     repaginate,
   };
 };
