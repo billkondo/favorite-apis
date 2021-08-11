@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Col, Row, Spin } from 'antd';
+import { Button, Col, Divider, Row, Spin } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
@@ -13,7 +13,8 @@ type Props = {
   unselectKey: () => void;
 };
 const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
-  const { totalCount, loading, done } = useApisPageSearchList(selectedKey);
+  const { totalCount, renderItem, items, loading, done } =
+    useApisPageSearchList(selectedKey);
 
   return (
     <>
@@ -45,11 +46,25 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
       )}
 
       {done && (
-        <Row style={{ padding: 48 }}>
-          <Text>
-            <b>Results</b>: {displayNumber(totalCount!)}
-          </Text>
-        </Row>
+        <div style={{ padding: 48 }}>
+          <Row>
+            <Text>
+              <b>Results</b>: {displayNumber(totalCount!)}
+            </Text>
+          </Row>
+
+          {items.map((item) => {
+            return (
+              <div key={item.id} style={{ paddingTop: 40 }}>
+                <Row>{renderItem(item)}</Row>
+
+                <Row>
+                  <Divider></Divider>
+                </Row>
+              </div>
+            );
+          })}
+        </div>
       )}
     </>
   );

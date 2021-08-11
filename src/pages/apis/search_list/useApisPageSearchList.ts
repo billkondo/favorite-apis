@@ -8,6 +8,7 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   const apiSource = useMemo(() => ApiSourcesMap[apiSourceKey], [apiSourceKey]);
 
   const [totalCount, setTotalCount] = useState<number>();
+  const [items, setItems] = useState<Array<any>>([]);
 
   const { submit, loading, done } = useSubmit(
     async () => {
@@ -15,8 +16,9 @@ const useApisPageSearchList = (apiSourceKey: string) => {
       return queryResult;
     },
     (queryResult) => {
-      const { totalCount } = queryResult;
+      const { totalCount, items } = queryResult;
       setTotalCount(totalCount);
+      setItems(items);
     }
   );
 
@@ -28,6 +30,9 @@ const useApisPageSearchList = (apiSourceKey: string) => {
 
   return {
     totalCount,
+    items,
+
+    renderItem: apiSource.renderItem,
 
     loading,
     done,

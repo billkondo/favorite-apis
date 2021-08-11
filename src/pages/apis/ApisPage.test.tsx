@@ -5,6 +5,15 @@ import mockMatchMedia from 'mocks/matchMedia';
 
 import ApisPage from './ApisPage';
 
+jest.mock('pages/apis/search_list/useApisPageSearchList', () => ({
+  __esModule: true,
+  default: () => ({
+    totalCount: 0,
+    items: [],
+    renderItem: () => <></>,
+  }),
+}));
+
 describe('ApisPage', () => {
   const setup = () => {
     mockMatchMedia();

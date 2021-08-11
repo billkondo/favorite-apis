@@ -3,6 +3,7 @@ import QueryType from 'domain/query/QueryType';
 
 import GitHubItemType from './GitHubItemType';
 
+import GITHUB_KEY from './keyGitHub';
 import apiCallGitHub from './apiCallGitHub';
 
 type GitHubResponseItem = {
@@ -39,7 +40,7 @@ const mapGitHubResponseItemToGitHubItem = (
   item: GitHubResponseItem
 ): GitHubItemType => {
   return {
-    id: item.id,
+    id: `${GITHUB_KEY}_${item.id}`,
     stars: item.stargazers_count,
     forks: item.forks,
     name: item.full_name,

@@ -1,5 +1,5 @@
 type GitHubItemType = {
-  id: number;
+  id: string;
   name: string;
   description: string;
 
