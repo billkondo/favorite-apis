@@ -4,6 +4,8 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
 
+import FavoriteButton from 'components/favorite_button/FavoriteButton';
+
 import displayNumber from 'utils/displayNumber';
 
 import useApisPageSearchList from './useApisPageSearchList';
@@ -85,7 +87,12 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
           {items.map((item) => {
             return (
-              <div key={item.id} style={{ paddingTop: 40 }}>
+              <div
+                key={item.id}
+                style={{ marginTop: 40, position: 'relative' }}
+              >
+                <FavoriteButton></FavoriteButton>
+
                 <Row>{renderItem(item)}</Row>
 
                 <Row>
