@@ -1,10 +1,18 @@
+import { FC, useMemo } from 'react';
 import { Button } from 'antd';
-import { HeartFilled } from '@ant-design/icons';
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 
 import useAuthentication from 'domain/authentication/useAuthentication';
+import useFavorited from 'domain/favorited/useFavorited';
 
-const FavoriteButton = () => {
+type Props = {
+  id: string;
+};
+const FavoriteButton: FC<Props> = ({ id }) => {
+  const { isFavorited } = useFavorited();
   const { authenticated } = useAuthentication();
+
+  const favorited = useMemo(() => isFavorited(id), [id, isFavorited]);
 
   if (!authenticated) return <></>;
 
@@ -12,7 +20,7 @@ const FavoriteButton = () => {
     <Button
       type="text"
       shape="circle"
-      icon={<HeartFilled></HeartFilled>}
+      icon={favorited ? <HeartFilled /> : <HeartOutlined />}
       style={{ position: 'absolute', right: 0, top: 0 }}
     ></Button>
   );

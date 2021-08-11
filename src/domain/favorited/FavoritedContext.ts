@@ -4,6 +4,8 @@ type FavoritedContextType = {
   favoritedList: Array<any>;
   favoritedMap: { [key: string]: any };
 
+  isFavorited?: (id: string) => boolean;
+
   done: boolean;
   loading: boolean;
 };

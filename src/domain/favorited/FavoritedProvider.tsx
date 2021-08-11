@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import useUseCases from 'domain/usecases/useUseCases';
 import useAuthentication from 'domain/authentication/useAuthentication';
@@ -32,11 +32,18 @@ const FavoritedProvider: FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
 
+  const isFavorited = useCallback(
+    (id: string) => !!favoritedMap[id],
+    [favoritedMap]
+  );
+
   return (
     <FavoritedContext.Provider
       value={{
         favoritedList,
         favoritedMap,
+
+        isFavorited,
 
         done,
         loading,

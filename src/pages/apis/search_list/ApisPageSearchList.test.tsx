@@ -20,6 +20,10 @@ type TestParams = {
 
 jest.mock('api_sources/github/searchGitHub');
 jest.mock('api_sources/spotify/searchSpotify');
+jest.mock('components/favorite_button/FavoriteButton', () => ({
+  __esModule: true,
+  default: () => <></>,
+}));
 
 describe('ApisPageSearchList', () => {
   const DEFAULT_QUERY = {

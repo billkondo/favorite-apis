@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Row, Spin } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import Text from 'antd/lib/typography/Text';
 
 type Props = {
   favoritesList: Array<any>;
@@ -18,16 +19,16 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
       </Row>
 
       {loading && (
-        <Row>
+        <Row style={{ padding: 4 }}>
           <Spin size="large"></Spin>
         </Row>
       )}
 
       {done && (
-        <Row>
-          <Title level={4}>
+        <Row style={{ padding: 4 }}>
+          <Text>
             You have <b>{size}</b> favorited items
-          </Title>
+          </Text>
         </Row>
       )}
     </>

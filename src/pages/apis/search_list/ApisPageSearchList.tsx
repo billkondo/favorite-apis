@@ -91,7 +91,7 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
                 key={item.id}
                 style={{ marginTop: 40, position: 'relative' }}
               >
-                <FavoriteButton></FavoriteButton>
+                <FavoriteButton id={item.id}></FavoriteButton>
 
                 <Row>{renderItem(item)}</Row>
 
