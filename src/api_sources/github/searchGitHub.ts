@@ -23,9 +23,9 @@ type GitHubResponse = {
 };
 
 const searchGitHub = async (
-  query: GitHubForm = { name: 'react', sortBy: '' }
+  query: GitHubForm = { name: 'react', sortBy: '', page: 1, pageSize: 25 }
 ): Promise<QueryResultType<GitHubItemType>> => {
-  const { name = 'react', sortBy = '' } = query;
+  const { name = 'react', sortBy = '', page = 1, pageSize = 25 } = query;
 
   let queryString = `q=${name}`;
 
@@ -37,6 +37,9 @@ const searchGitHub = async (
 
     queryString += `&sort=${sort}&order=${order}`;
   }
+
+  if (page) queryString += `&page=${page}`;
+  if (pageSize) queryString += `&per_page=${pageSize}`;
 
   const response = await apiCallGitHub(queryString);
 

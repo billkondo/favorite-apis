@@ -10,11 +10,18 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   const [totalCount, setTotalCount] = useState<number>();
   const [items, setItems] = useState<Array<any>>([]);
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<any>({});
+
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(25);
 
   const { submit, loading, done } = useSubmit(
     async () => {
-      const queryResult = await apiSource.search(query);
+      const queryResult = await apiSource.search({
+        ...query,
+        page,
+        pageSize,
+      });
       return queryResult;
     },
     (queryResult) => {
@@ -30,8 +37,16 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filter = (newQuery: any) => {
-    setQuery(newQuery);
+  const filter = (query: any) => {
+    setQuery(query);
+    setPage(1);
+    submit();
+  };
+
+  const repaginate = (pageSize: number) => (page: number) => {
+    setPage(page);
+    setPageSize(pageSize);
+
     submit();
   };
 
@@ -46,6 +61,10 @@ const useApisPageSearchList = (apiSourceKey: string) => {
 
     loading,
     done,
+
+    page,
+    pageSize,
+    repaginate,
   };
 };
 

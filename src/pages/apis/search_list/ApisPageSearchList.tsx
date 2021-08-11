@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Col, Divider, Row, Spin } from 'antd';
+import { Button, Col, Divider, Pagination, Row, Spin } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
@@ -24,6 +24,10 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
     loading,
     done,
+
+    page,
+    pageSize,
+    repaginate,
   } = useApisPageSearchList(selectedKey);
 
   return (
@@ -49,6 +53,18 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
       <Row style={{ padding: 48, paddingBottom: 0 }}>
         {renderSearchBar(filter, loading)}
+      </Row>
+
+      <Row style={{ padding: 48, paddingBottom: 0 }}>
+        <Pagination
+          current={page}
+          total={totalCount}
+          defaultPageSize={pageSize}
+          disabled={loading}
+          pageSizeOptions={['25', '50', '100']}
+          onChange={repaginate(pageSize)}
+          onShowSizeChange={(page, pageSize) => repaginate(pageSize)(page)}
+        ></Pagination>
       </Row>
 
       {loading && (

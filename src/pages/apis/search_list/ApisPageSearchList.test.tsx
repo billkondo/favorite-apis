@@ -22,6 +22,11 @@ jest.mock('api_sources/github/searchGitHub');
 jest.mock('api_sources/spotify/searchSpotify');
 
 describe('ApisPageSearchList', () => {
+  const DEFAULT_QUERY = {
+    page: 1,
+    pageSize: 25,
+  };
+
   const setup = (
     params: TestParams = {
       apiSourceKey: GitHubApiSource.key,
@@ -61,14 +66,16 @@ describe('ApisPageSearchList', () => {
   test('it should search without query parameters when it first load and GitHub is selected', async () => {
     const { searchGitHubMock } = setup();
 
-    await waitFor(() => expect(searchGitHubMock).toBeCalledWith(''));
+    await waitFor(() => expect(searchGitHubMock).toBeCalledWith(DEFAULT_QUERY));
     expect(searchGitHubMock).toBeCalledTimes(1);
   });
 
   test('it should search without query parameters when it first load and Spotify is selected', async () => {
     const { searchSpotifyMock } = setup({ apiSourceKey: SpotifyApiSource.key });
 
-    await waitFor(() => expect(searchSpotifyMock).toBeCalledWith(''));
+    await waitFor(() =>
+      expect(searchSpotifyMock).toBeCalledWith(DEFAULT_QUERY)
+    );
     expect(searchSpotifyMock).toBeCalledTimes(1);
   });
 
@@ -85,10 +92,10 @@ describe('ApisPageSearchList', () => {
         id: '1',
         name: 'name',
         description: 'description',
-        forks: 3,
+        forks: 32,
         stars: 123,
         language: 'C++',
-        url: '',
+        url: '/url',
       },
     ];
 

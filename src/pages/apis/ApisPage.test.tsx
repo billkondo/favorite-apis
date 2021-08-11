@@ -12,6 +12,8 @@ jest.mock('pages/apis/search_list/useApisPageSearchList', () => ({
     items: [],
     renderItem: () => <></>,
     renderSearchBar: () => <></>,
+    repaginate: () => jest.fn(),
+    page: 1,
   }),
 }));
 
