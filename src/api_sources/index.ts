@@ -1,16 +1,16 @@
 import ApiSourceType from './ApiSourceType';
 
 import GitHubApiSource from './github/GitHubApiSouce';
-import SpotifyApiSource from './spotify/SpotifyApiSource';
+import FreeToGameSource from './freetogame/FreeToGameSource';
 
 const ApiSources: Array<ApiSourceType<any, any>> = [
   GitHubApiSource,
-  SpotifyApiSource,
+  FreeToGameSource,
 ];
 
 export const ApiSourcesMap: { [key: string]: ApiSourceType<any, any> } = {
   [GitHubApiSource.key]: GitHubApiSource,
-  [SpotifyApiSource.key]: SpotifyApiSource,
+  [FreeToGameSource.key]: FreeToGameSource,
 };
 
 export default ApiSources;

@@ -1,0 +1,3 @@
+const FREETOGAME_KEY = 'FREETOGAME';
+
+export default FREETOGAME_KEY;

@@ -36,10 +36,10 @@ describe('ApisPage', () => {
     setup();
 
     const gitHubApiButton = await screen.findByTitle('GITHUB BUTTON');
-    const spotifyApiButton = await screen.findByTitle('SPOTIFY BUTTON');
+    const freeToGameButton = await screen.findByTitle('FREETOGAME BUTTON');
 
     expect(gitHubApiButton).toBeVisible();
-    expect(spotifyApiButton).toBeVisible();
+    expect(freeToGameButton).toBeVisible();
   });
 
   test('it should go to GitHub search list when GitHub button is clicked', async () => {
@@ -50,16 +50,6 @@ describe('ApisPage', () => {
 
     const gitHubTitle = await screen.findByTitle('GITHUB API');
     expect(gitHubTitle).toBeVisible();
-  });
-
-  test('it should go to Spotify search list when Spotify button is clicked', async () => {
-    setup();
-
-    const spotifyApiButton = await screen.findByTitle('SPOTIFY BUTTON');
-    userEvent.click(spotifyApiButton);
-
-    const spotifyTitle = await screen.findByTitle('SPOTIFY API');
-    expect(spotifyTitle).toBeVisible();
   });
 
   test('it should return to api source options when back button is clicked', async () => {

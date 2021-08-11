@@ -3,12 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import mockMatchMedia from 'mocks/matchMedia';
 
 import GitHubApiSource from 'api_sources/github/GitHubApiSouce';
-import SpotifyApiSource from 'api_sources/spotify/SpotifyApiSource';
-
 import GitHubItemType from 'api_sources/github/GitHubItemType';
-
 import searchGitHub from 'api_sources/github/searchGitHub';
-import searchSpotify from 'api_sources/spotify/searchSpotify';
 
 import ApisPageSearchList from './ApisPageSearchList';
 
@@ -19,7 +15,6 @@ type TestParams = {
 };
 
 jest.mock('api_sources/github/searchGitHub');
-jest.mock('api_sources/spotify/searchSpotify');
 jest.mock('components/favorite_button/FavoriteButton', () => ({
   __esModule: true,
   default: () => <></>,
@@ -54,9 +49,6 @@ describe('ApisPageSearchList', () => {
       items,
     }));
 
-    const searchSpotifyMock = jest.fn();
-    (searchSpotify as jest.Mock).mockImplementation(searchSpotifyMock);
-
     render(
       <ApisPageSearchList
         selectedKey={apiSourceKey}
@@ -64,7 +56,7 @@ describe('ApisPageSearchList', () => {
       ></ApisPageSearchList>
     );
 
-    return { searchGitHubMock, searchSpotifyMock };
+    return { searchGitHubMock };
   };
 
   test('it should search without query parameters when it first load and GitHub is selected', async () => {
@@ -72,15 +64,6 @@ describe('ApisPageSearchList', () => {
 
     await waitFor(() => expect(searchGitHubMock).toBeCalledWith(DEFAULT_QUERY));
     expect(searchGitHubMock).toBeCalledTimes(1);
-  });
-
-  test('it should search without query parameters when it first load and Spotify is selected', async () => {
-    const { searchSpotifyMock } = setup({ apiSourceKey: SpotifyApiSource.key });
-
-    await waitFor(() =>
-      expect(searchSpotifyMock).toBeCalledWith(DEFAULT_QUERY)
-    );
-    expect(searchSpotifyMock).toBeCalledTimes(1);
   });
 
   test('it should show total results count when first search is completed', async () => {
