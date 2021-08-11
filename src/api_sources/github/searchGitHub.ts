@@ -46,7 +46,7 @@ const searchGitHub = async (
   const { total_count, items } = response.data as GitHubResponse;
 
   return {
-    totalCount: total_count,
+    totalCount: Math.min(1000, total_count), // Only first 1000 results are available
     items: items.map(mapGitHubResponseItemToGitHubItem),
   };
 };
@@ -56,12 +56,12 @@ const mapGitHubResponseItemToGitHubItem = (
 ): GitHubItemType => {
   return {
     id: `${GITHUB_KEY}_${item.id}`,
-    stars: item.stargazers_count,
-    forks: item.forks,
-    name: item.full_name,
-    url: item.html_url,
-    description: item.description,
-    language: item.language,
+    stars: item.stargazers_count || 0,
+    forks: item.forks || 0,
+    name: item.full_name || '',
+    url: item.html_url || '',
+    description: item.description || '',
+    language: item.language || '',
   };
 };
 

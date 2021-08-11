@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { ForkOutlined, StarOutlined } from '@ant-design/icons';
 import { Button, Col, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
@@ -10,11 +11,11 @@ const renderItemGitHub = (item: GitHubItemType) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Row style={{ marginBottom: 8 }}>
-        <a href={url} target="_blank" rel="noreferrer">
+        <ItemNameWrapper url={url}>
           <Button type="link" style={{ padding: 0 }}>
             {name}
           </Button>
-        </a>
+        </ItemNameWrapper>
       </Row>
 
       {description && (
@@ -35,16 +36,29 @@ const renderItemGitHub = (item: GitHubItemType) => {
         <Col>
           <StarOutlined></StarOutlined>
 
-          <Text style={{ marginLeft: 4 }}>{stars}</Text>
+          <Text style={{ marginLeft: 4 }}>{stars.toLocaleString()}</Text>
         </Col>
 
         <Col>
           <ForkOutlined></ForkOutlined>
 
-          <Text style={{ marginLeft: 4 }}>{forks}</Text>
+          <Text style={{ marginLeft: 4 }}>{forks.toLocaleString()}</Text>
         </Col>
       </Row>
     </div>
+  );
+};
+
+type ItemNameWrapperProps = {
+  url: string;
+};
+const ItemNameWrapper: FC<ItemNameWrapperProps> = ({ url = '', children }) => {
+  if (!url.trim()) return <>children</>;
+
+  return (
+    <a href={url} target="_blank" rel="noreferrer">
+      {children}
+    </a>
   );
 };
 
