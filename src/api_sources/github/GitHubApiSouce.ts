@@ -14,6 +14,8 @@ import searchGitHub from './searchGitHub';
 const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
 
+  apiName: 'GitHub',
+
   renderButton: renderButtonGitHub,
   renderItem: renderItemGitHub,
   renderSearchBar: renderSearchBarGitHub,

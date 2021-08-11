@@ -54,6 +54,8 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     totalCount,
     items,
 
+    apiName: apiSource.apiName,
+
     renderItem: apiSource.renderItem,
     renderSearchBar: apiSource.renderSearchBar,
 

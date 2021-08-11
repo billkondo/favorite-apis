@@ -19,6 +19,8 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
     totalCount,
     items,
 
+    apiName,
+
     renderItem,
     renderSearchBar,
 
@@ -48,7 +50,7 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
         <Col>
           <Text title={`${selectedKey} API`}>
-            <b>{selectedKey}</b> API
+            <b>{apiName}</b> API
           </Text>
         </Col>
       </Row>

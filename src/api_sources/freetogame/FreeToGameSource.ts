@@ -12,6 +12,8 @@ import FreeToGameSearch from './FreeToGameSearch';
 const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   key: FREE_TO_GAME_KEY,
 
+  apiName: 'FREETOGAME',
+
   renderButton: FreeToGameRenderButton,
   renderItem: FreeToGameRenderItem,
   renderSearchBar: FreeToGameRenderSearchBar,
