@@ -4,7 +4,7 @@ import mockMatchMedia from 'mocks/matchMedia';
 
 import GitHubApiSource from 'api_sources/github/GitHubApiSouce';
 import GitHubItemType from 'api_sources/github/GitHubItemType';
-import searchGitHub from 'api_sources/github/searchGitHub';
+import GitHubSearch from 'api_sources/github/GitHubSearch';
 
 import ApisPageSearchList from './ApisPageSearchList';
 
@@ -14,7 +14,7 @@ type TestParams = {
   items?: Array<any>;
 };
 
-jest.mock('api_sources/github/searchGitHub');
+jest.mock('api_sources/github/GitHubSearch');
 jest.mock('components/favorite_button/FavoriteButton', () => ({
   __esModule: true,
   default: () => <></>,
@@ -41,10 +41,10 @@ describe('ApisPageSearchList', () => {
 
     mockMatchMedia();
 
-    const searchGitHubMock = jest.fn();
-    (searchGitHub as jest.Mock).mockImplementation(searchGitHubMock);
+    const GitHubSearchMock = jest.fn();
+    (GitHubSearch as jest.Mock).mockImplementation(GitHubSearchMock);
 
-    searchGitHubMock.mockImplementation(async () => ({
+    GitHubSearchMock.mockImplementation(async () => ({
       totalCount,
       items,
     }));
@@ -56,14 +56,14 @@ describe('ApisPageSearchList', () => {
       ></ApisPageSearchList>
     );
 
-    return { searchGitHubMock };
+    return { GitHubSearchMock };
   };
 
   test('it should search without query parameters when it first load and GitHub is selected', async () => {
-    const { searchGitHubMock } = setup();
+    const { GitHubSearchMock } = setup();
 
-    await waitFor(() => expect(searchGitHubMock).toBeCalledWith(DEFAULT_QUERY));
-    expect(searchGitHubMock).toBeCalledTimes(1);
+    await waitFor(() => expect(GitHubSearchMock).toBeCalledWith(DEFAULT_QUERY));
+    expect(GitHubSearchMock).toBeCalledTimes(1);
   });
 
   test('it should show total results count when first search is completed', async () => {

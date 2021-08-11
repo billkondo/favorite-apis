@@ -3,7 +3,7 @@ import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const { Option, OptGroup } = Select;
 
-const renderSearchBarGitHub = () => {
+const GitHubRenderSearchBar = () => {
   return (
     <>
       <Form.Item label="Name" name="name">
@@ -35,4 +35,4 @@ const renderSearchBarGitHub = () => {
   );
 };
 
-export default renderSearchBarGitHub;
+export default GitHubRenderSearchBar;

@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 
-import GITHUB_KEY from './keyGitHub';
+import GITHUB_KEY from './GitHubKey';
 
-const renderButtonGitHub = (onClick: () => void) => {
+const GitHubRenderButton = (onClick: () => void) => {
   return (
     <Button onClick={onClick} size="large" title={`${GITHUB_KEY} BUTTON`}>
       GitHub
@@ -10,4 +10,4 @@ const renderButtonGitHub = (onClick: () => void) => {
   );
 };
 
-export default renderButtonGitHub;
+export default GitHubRenderButton;

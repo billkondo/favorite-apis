@@ -5,7 +5,7 @@ import Text from 'antd/lib/typography/Text';
 
 import GitHubItemType from './GitHubItemType';
 
-const renderItemGitHub = (item: GitHubItemType) => {
+const GitHubRenderItem = (item: GitHubItemType) => {
   const { name, description, language, forks, stars, url } = item;
 
   return (
@@ -62,4 +62,4 @@ const ItemNameWrapper: FC<ItemNameWrapperProps> = ({ url = '', children }) => {
   );
 };
 
-export default renderItemGitHub;
+export default GitHubRenderItem;

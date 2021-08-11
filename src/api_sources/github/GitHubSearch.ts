@@ -1,11 +1,11 @@
 import QueryResultType from 'domain/query/QueryResultType';
 
-import GITHUB_KEY from './keyGitHub';
+import GITHUB_KEY from './GitHubKey';
 
 import GitHubItemType from './GitHubItemType';
 import GitHubForm from './GitHubForm';
 
-import apiCallGitHub from './apiCallGitHub';
+import GitHubApiCall from './GitHubApiCall';
 
 type GitHubResponseItem = {
   id: number;
@@ -22,7 +22,7 @@ type GitHubResponse = {
   items: Array<GitHubResponseItem>;
 };
 
-const searchGitHub = async (
+const GitHubSearch = async (
   query: GitHubForm = { name: 'react', sortBy: '', page: 1, pageSize: 25 }
 ): Promise<QueryResultType<GitHubItemType>> => {
   const { name = 'react', sortBy = '', page = 1, pageSize = 25 } = query;
@@ -41,7 +41,7 @@ const searchGitHub = async (
   if (page) queryString += `&page=${page}`;
   if (pageSize) queryString += `&per_page=${pageSize}`;
 
-  const response = await apiCallGitHub(queryString);
+  const response = await GitHubApiCall(queryString);
 
   const { total_count, items } = response.data as GitHubResponse;
 
@@ -65,4 +65,4 @@ const mapGitHubResponseItemToGitHubItem = (
   };
 };
 
-export default searchGitHub;
+export default GitHubSearch;

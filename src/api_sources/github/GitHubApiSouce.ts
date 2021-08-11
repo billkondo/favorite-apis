@@ -3,13 +3,13 @@ import ApiSourceType from 'api_sources/ApiSourceType';
 import GitHubForm from './GitHubForm';
 import GitHubItemType from './GitHubItemType';
 
-import GITHUB_KEY from './keyGitHub';
+import GITHUB_KEY from './GitHubKey';
 
-import renderButtonGitHub from './renderButtonGitHub';
-import renderItemGitHub from './renderItemGitHub';
-import renderSearchBarGitHub from './renderSearchBarGitHub';
+import GitHubRenderButton from './GitHubRenderButton';
+import GitHubRenderItem from './GitHubRenderItem';
+import GitHubRenderSearchBar from './GitHubRenderSearchBar';
 
-import searchGitHub from './searchGitHub';
+import GitHubSearch from './GitHubSearch';
 
 const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
@@ -19,11 +19,11 @@ const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   defaultPageSize: 25,
   pageSizes: ['25', '50', '100'],
 
-  renderButton: renderButtonGitHub,
-  renderItem: renderItemGitHub,
-  renderSearchBar: renderSearchBarGitHub,
+  renderButton: GitHubRenderButton,
+  renderItem: GitHubRenderItem,
+  renderSearchBar: GitHubRenderSearchBar,
 
-  search: searchGitHub,
+  search: GitHubSearch,
 };
 
 export default GitHubApiSource;
