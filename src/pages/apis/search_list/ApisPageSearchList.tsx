@@ -6,8 +6,6 @@ import Text from 'antd/lib/typography/Text';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
 
-import displayNumber from 'utils/displayNumber';
-
 import useApisPageSearchList from './useApisPageSearchList';
 
 type Props = {
@@ -16,7 +14,7 @@ type Props = {
 };
 const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
   const {
-    totalCount,
+    totalCount = 0,
     items,
 
     apiName,
@@ -98,7 +96,7 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
         <div style={{ padding: 48 }}>
           <Row>
             <Text>
-              <b>Results</b>: {displayNumber(totalCount!)}
+              <b>Results</b>: {totalCount.toLocaleString()}
             </Text>
           </Row>
 
