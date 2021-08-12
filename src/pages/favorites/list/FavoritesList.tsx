@@ -9,11 +9,17 @@ import FavoriteButton from 'components/favorite_button/FavoriteButton';
 
 type Props = {
   favoritesList: Array<any>;
+  favoriteApiSources: Array<any>;
 
   done: boolean;
   loading: boolean;
 };
-const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
+const FavoritesList: FC<Props> = ({
+  favoritesList = [],
+  favoriteApiSources = [],
+  done,
+  loading,
+}) => {
   const size = favoritesList.length;
 
   return (
@@ -36,6 +42,23 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
             </Text>
           </Row>
 
+          {favoriteApiSources.map((apiSourceKey) => {
+            const apiSource = ApiSourcesMap[apiSourceKey];
+
+            if (!apiSource) {
+              console.warn(
+                `apiSourceKey ${apiSourceKey} does not exist in ApiSourceMap`
+              );
+              return <></>;
+            }
+
+            return (
+              <Row style={{ padding: 4, marginTop: 16 }} key={apiSourceKey}>
+                {apiSource.renderCheckBoxes()}
+              </Row>
+            );
+          })}
+
           {favoritesList.map((item) => {
             const apiSource = ApiSourcesMap[item.key];
 
@@ -47,7 +70,7 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
             return (
               <div
                 key={item.id}
-                style={{ marginTop: 40, position: 'relative' }}
+                style={{ padding: 4, marginTop: 40, position: 'relative' }}
               >
                 <FavoriteButton id={item.id} item={item}></FavoriteButton>
 

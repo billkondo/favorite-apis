@@ -3,9 +3,9 @@ import useFavorited from 'domain/favorited/useFavorited';
 
 const useFavoritesPage = () => {
   const { authenticated } = useAuthentication();
-  const { favoritedList, done, loading } = useFavorited();
+  const { favoritedList, favoritedApiSources, done, loading } = useFavorited();
 
-  return { authenticated, favoritedList, done, loading };
+  return { authenticated, favoritedList, favoritedApiSources, done, loading };
 };
 
 export default useFavoritesPage;

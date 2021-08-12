@@ -6,6 +6,7 @@ const useFavorited = () => {
   const {
     favoritedList,
     favoritedMap,
+    favoritedApiSources,
 
     isFavorited,
     favoriteItem,
@@ -18,6 +19,7 @@ const useFavorited = () => {
   return {
     favoritedList,
     favoritedMap,
+    favoritedApiSources,
 
     isFavorited: isFavorited!,
     favoriteItem: favoriteItem!,
