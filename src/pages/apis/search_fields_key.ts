@@ -1,0 +1,3 @@
+const SEARCH_FIELDS_LOCAL_STORAGE_KEY = 'search';
+
+export default SEARCH_FIELDS_LOCAL_STORAGE_KEY;

@@ -1,5 +1,7 @@
 import { Form, Select } from 'antd';
 
+import FreeToGameForm from './FreeToGameForm';
+
 const { Option } = Select;
 
 const FreeToGameCategories = [
@@ -50,13 +52,23 @@ const FreeToGameCategories = [
   'mmorts',
 ];
 
-const FreeToGameRenderSearchBar = (
-  names = ['platform', 'category', 'sortBy']
-) => {
+const FreeToGameRenderSearchBar = (params?: {
+  initialForm?: FreeToGameForm;
+  names?: Array<string>;
+}) => {
+  const { initialForm = {}, names = ['platform', 'category', 'sortBy'] } =
+    params || {};
+
+  const {
+    platform = '',
+    category = '',
+    sortBy = '',
+  } = initialForm as FreeToGameForm;
+
   return (
     <>
       {names[0] && (
-        <Form.Item label="Platform" name={names[0]}>
+        <Form.Item label="Platform" name={names[0]} initialValue={platform}>
           <Select allowClear style={{ minWidth: 160 }} placeholder="PC">
             <Option value="pc">PC</Option>
             <Option value="browser">Browser</Option>
@@ -66,7 +78,7 @@ const FreeToGameRenderSearchBar = (
       )}
 
       {names[1] && (
-        <Form.Item label="Category" name={names[1]}>
+        <Form.Item label="Category" name={names[1]} initialValue={category}>
           <Select allowClear style={{ minWidth: 160 }} placeholder="shooter">
             {FreeToGameCategories.map((category) => (
               <Option key={category} value={category}>
@@ -78,7 +90,7 @@ const FreeToGameRenderSearchBar = (
       )}
 
       {names[2] && (
-        <Form.Item name="sortBy" label={names[2]}>
+        <Form.Item name="sortBy" label={names[2]} initialValue={sortBy}>
           <Select allowClear style={{ minWidth: 160 }}>
             <Option value="release-date">Release Date</Option>
             <Option value="alphabetical">Alphabetical</Option>

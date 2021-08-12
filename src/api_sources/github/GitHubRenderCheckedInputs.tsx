@@ -7,7 +7,7 @@ const GitHubRenderCheckedInputs = (checkedInputs: Array<string>) => {
     checkedInputs.includes(key) ? key : ''
   );
 
-  return GitHubRenderSearchBar(checkedKeys);
+  return GitHubRenderSearchBar({ names: checkedKeys });
 };
 
 export default GitHubRenderCheckedInputs;

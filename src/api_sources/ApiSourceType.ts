@@ -12,7 +12,10 @@ type ApiSourceType<T, S> = {
 
   renderButton: (onClick: () => void) => JSX.Element;
   renderItem: (item: T) => JSX.Element;
-  renderSearchBar: () => JSX.Element;
+  renderSearchBar: (params?: {
+    initialForm?: S;
+    names?: Array<string>;
+  }) => JSX.Element;
   renderCheckBoxes: (onChange: (e: CheckboxChangeEvent) => void) => JSX.Element;
   renderCheckedInputs: (checkedInputs: Array<string>) => JSX.Element;
 

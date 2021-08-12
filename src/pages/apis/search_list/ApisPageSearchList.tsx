@@ -14,6 +14,8 @@ type Props = {
 };
 const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
   const {
+    initialQuery,
+
     totalCount = 0,
     items,
 
@@ -57,7 +59,7 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
       <Row style={{ padding: 48, paddingBottom: 0 }}>
         <Form layout="inline" onFinish={filter}>
-          {renderSearchBar()}
+          {renderSearchBar({ initialForm: initialQuery })}
 
           <Form.Item>
             <Button

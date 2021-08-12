@@ -6,7 +6,7 @@ const FreeToGameRenderCheckedInputs = (checkedInputs: Array<string>) => {
     checkedInputs.includes(key) ? key : ''
   );
 
-  return FreeToGameRenderSearchBar(checkedNames);
+  return FreeToGameRenderSearchBar({ names: checkedNames });
 };
 
 export default FreeToGameRenderCheckedInputs;
