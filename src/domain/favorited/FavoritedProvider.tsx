@@ -15,6 +15,8 @@ const FavoritedProvider: FC = ({ children }) => {
   const [favoritedList, setFavoritedList] = useState<Array<any>>([]);
   const [favoritedMap, setFavoritedMap] = useState<{ [key: string]: any }>({});
 
+  const [updatedList, setUpdatedList] = useState<Array<any> | null>(null);
+
   const { done, loading, submit } = useSubmit(
     async () => {
       const favoritedItems = await delayed(
@@ -22,14 +24,19 @@ const FavoritedProvider: FC = ({ children }) => {
       );
       return favoritedItems;
     },
-    (favoritedItems) => {
-      const initialMap: { [key: string]: any } = {};
-      for (const item of favoritedItems) initialMap[item.id] = item;
-
-      setFavoritedMap(initialMap);
-      setFavoritedList(favoritedItems);
-    }
+    (favoritedItems) => setUpdatedList(favoritedItems)
   );
+
+  useEffect(() => {
+    if (updatedList === null) return;
+    setUpdatedList(null);
+
+    const newFavoritedMap: { [key: string]: any } = {};
+    for (const item of updatedList) newFavoritedMap[item.id] = item;
+
+    setFavoritedMap(newFavoritedMap);
+    setFavoritedList(updatedList);
+  }, [updatedList]);
 
   useEffect(() => {
     if (authenticated) submit();
@@ -52,32 +59,11 @@ const FavoritedProvider: FC = ({ children }) => {
         favoritedUseCases.favoriteItemUseCase(item)
       );
 
-      if (favorited) {
-        setFavoritedList((oldList) => oldList.concat(item));
-        setFavoritedMap((oldMap) => {
-          const newMap = {
-            ...oldMap,
-            [item.id]: item,
-          };
-
-          return newMap;
-        });
-      } else {
-        setFavoritedList((oldList) =>
-          oldList.filter((oldItem) => oldItem.id !== item.id)
-        );
-        setFavoritedMap((oldMap) => {
-          const newMap = {
-            ...oldMap,
-          };
-
-          delete newMap[item.id];
-
-          return newMap;
-        });
-      }
+      if (favorited) setUpdatedList(favoritedList.concat(item));
+      else
+        setUpdatedList(favoritedList.filter((_item) => _item.id !== item.id));
     },
-    [favoritedUseCases]
+    [favoritedUseCases, favoritedList]
   );
 
   return (
