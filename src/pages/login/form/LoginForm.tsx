@@ -1,9 +1,10 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Row } from 'antd';
+import Text from 'antd/lib/typography/Text';
 
 import useLoginForm from './useLoginForm';
 
 const LoginForm = () => {
-  const { onSubmit, loading } = useLoginForm();
+  const { onSubmit, loading, errorMessage } = useLoginForm();
 
   return (
     <Form
@@ -15,6 +16,7 @@ const LoginForm = () => {
       <Form.Item
         label="Email"
         name="email"
+        hasFeedback
         rules={[
           { required: true, message: 'Email should not be empty' },
           { type: 'email', message: 'Email is invalid' },
@@ -26,6 +28,7 @@ const LoginForm = () => {
       <Form.Item
         label="Password"
         name="password"
+        hasFeedback
         rules={[{ required: true, message: 'Password should not be empty' }]}
         style={{ marginTop: 16 }}
       >
@@ -45,6 +48,10 @@ const LoginForm = () => {
           Submit
         </Button>
       </Form.Item>
+
+      <Row justify="center">
+        <Text type="danger">{errorMessage}</Text>
+      </Row>
     </Form>
   );
 };

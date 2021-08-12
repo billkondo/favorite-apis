@@ -1,9 +1,10 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Row } from 'antd';
+import Text from 'antd/lib/typography/Text';
 
 import useRegisterForm from './useRegisterForm';
 
 const RegisterForm = () => {
-  const { onSubmit, loading } = useRegisterForm();
+  const { onSubmit, loading, errorMessage } = useRegisterForm();
 
   return (
     <Form
@@ -71,6 +72,10 @@ const RegisterForm = () => {
           Submit
         </Button>
       </Form.Item>
+
+      <Row justify="center">
+        <Text type="danger">{errorMessage}</Text>
+      </Row>
     </Form>
   );
 };

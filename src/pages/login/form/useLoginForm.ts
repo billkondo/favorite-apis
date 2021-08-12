@@ -3,6 +3,10 @@ import { useHistory } from 'react-router-dom';
 
 import Routes from 'config/routes';
 
+import {
+  UserNotFound,
+  WrongPassword,
+} from 'domain/authentication/AuthenticationError';
 import LoginFormType from 'domain/authentication/LoginFormType';
 import useAuthentication from 'domain/authentication/useAuthentication';
 
@@ -16,10 +20,29 @@ const useLoginForm = () => {
     email: '',
     password: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const { submit, loading } = useSubmit(async () => {
-    await login(submittedForm);
-  });
+  const { submit, loading } = useSubmit(
+    async () => {
+      await login(submittedForm);
+    },
+    () => {},
+    (error) => {
+      switch (error.constructor) {
+        case WrongPassword:
+          setErrorMessage('Wrong Password');
+          break;
+
+        case UserNotFound:
+          setErrorMessage('There is no account with this email');
+          break;
+
+        default:
+          setErrorMessage('Something went wrong. Try again');
+          throw error;
+      }
+    }
+  );
 
   useEffect(() => {
     if (authenticated) history.push(Routes.HOME);
@@ -30,7 +53,7 @@ const useLoginForm = () => {
     submit();
   };
 
-  return { onSubmit, loading };
+  return { onSubmit, loading, errorMessage };
 };
 
 export default useLoginForm;
