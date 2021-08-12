@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import UserType from 'domain/user/UserType';
 import useUseCases from 'domain/usecases/useUseCases';
@@ -13,6 +13,10 @@ const AuthenticationProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<UserType | null>(
     authenticationUseCases.readPersistedUserUseCase()
   );
+
+  useEffect(() => {
+    if (currentUser) authenticationUseCases.persistUserUseCase(currentUser);
+  }, [currentUser, authenticationUseCases]);
 
   const login = useCallback(
     async (form: LoginFormType) => {
