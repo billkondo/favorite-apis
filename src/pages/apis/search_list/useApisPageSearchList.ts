@@ -45,9 +45,9 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     submit();
   };
 
-  const repaginate = (pageSize: number) => (page: number) => {
+  const repaginate = (pageSize: number | undefined) => (page: number) => {
     setPage(page);
-    setPageSize(pageSize);
+    if (pageSize) setPageSize(pageSize);
 
     submit();
   };

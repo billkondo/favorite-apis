@@ -33,9 +33,17 @@ const FreeToGameSearch = async (
     category: '',
     platform: '',
     sortBy: '',
+    page: 1,
+    pageSize: 20,
   }
 ): Promise<QueryResultType<FreeToGameItemType>> => {
-  const { sortBy = '', platform = '', category = '' } = query;
+  const {
+    sortBy = '',
+    platform = '',
+    category = '',
+    page = 1,
+    pageSize = 20,
+  } = query;
 
   let queryString = '';
 
@@ -47,9 +55,13 @@ const FreeToGameSearch = async (
   const response = await FreeToGameApiCall(queryStringWithFirstLetterRemoved);
   const { items, items_count } = response.data as FreeToGameResponse;
 
+  const pagedResults = items
+    .slice((page - 1) * pageSize, page * pageSize)
+    .map(mapResponseItemToItemType);
+
   return {
-    items: items.map(mapResponseItemToItemType).slice(0, 50),
-    totalCount: Math.min(50, items_count),
+    items: pagedResults,
+    totalCount: items_count,
   };
 };
 

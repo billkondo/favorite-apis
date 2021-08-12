@@ -14,6 +14,9 @@ const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
 
   apiName: 'FREETOGAME',
 
+  defaultPageSize: 20,
+  pageSizes: ['10', '20', '30'],
+
   renderButton: FreeToGameRenderButton,
   renderItem: FreeToGameRenderItem,
   renderSearchBar: FreeToGameRenderSearchBar,

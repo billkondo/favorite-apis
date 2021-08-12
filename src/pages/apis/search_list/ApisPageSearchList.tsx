@@ -81,8 +81,7 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
             defaultPageSize={pageSize}
             disabled={loading}
             pageSizeOptions={pagesSize}
-            onChange={repaginate(pageSize)}
-            onShowSizeChange={(page, pageSize) => repaginate(pageSize)(page)}
+            onChange={(page, pageSize) => repaginate(pageSize)(page)}
           ></Pagination>
         </Row>
       )}
