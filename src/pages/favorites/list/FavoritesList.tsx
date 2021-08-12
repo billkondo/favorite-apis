@@ -144,6 +144,12 @@ const FavoritesList: FC<Props> = ({
             </Form.Item>
           </Form>
 
+          <Row style={{ padding: 4, marginTop: 40 }}>
+            <Text>
+              <b>Filtered Results:</b> {filteredItems.length}
+            </Text>
+          </Row>
+
           {filteredItems.map((item) => {
             const apiSource = ApiSourcesMap[item.key];
 
