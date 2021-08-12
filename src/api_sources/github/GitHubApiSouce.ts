@@ -12,6 +12,7 @@ import GitHubRenderItem from './GitHubRenderItem';
 import GitHubRenderSearchBar from './GitHubRenderSearchBar';
 
 import GitHubSearch from './GitHubSearch';
+import GitHubFilter from './GitHubFilter';
 
 const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
@@ -28,6 +29,7 @@ const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   renderCheckedInputs: GitHubRenderCheckedInputs,
 
   search: GitHubSearch,
+  filter: GitHubFilter,
 };
 
 export default GitHubApiSource;

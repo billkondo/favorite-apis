@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, useEffect, useState } from 'react';
 import { Button, Divider, Form, Row, Spin } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Title from 'antd/lib/typography/Title';
@@ -24,7 +24,44 @@ const FavoritesList: FC<Props> = ({
   const [checkedKeys, setCheckedKeys] = useState<Array<string>>([]);
   const hasAnyCheckedKey = checkedKeys.length > 0;
 
+  const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [filteredItems, setFilteredItems] = useState<Array<any>>(favoritesList);
+
   const size = favoritesList.length;
+
+  useEffect(() => {
+    setFilteredItems(
+      favoritesList.filter((item) => {
+        const apiSource = ApiSourcesMap[item.key];
+
+        if (!apiSource) {
+          console.warn('apiSource is undefined');
+          return item;
+        }
+
+        return apiSource.filter(filters)(item);
+      })
+    );
+  }, [favoritesList, filters]);
+
+  useEffect(() => {
+    setFilters((filters) => {
+      const newFilters = {
+        ...filters,
+      };
+      const filterKeys = Object.keys(filters);
+
+      // Add new checked inputs
+      for (const checkedKey of checkedKeys)
+        if (!newFilters[checkedKey]) newFilters[checkedKey] = '';
+
+      // Remove unchecked inputs
+      for (const filterKey of filterKeys)
+        if (!checkedKeys.includes(filterKey)) delete newFilters[filterKey];
+
+      return newFilters;
+    });
+  }, [checkedKeys]);
 
   const onCheckBoxChanged = (e: CheckboxChangeEvent) => {
     const name = e.target.name;
@@ -38,6 +75,8 @@ const FavoritesList: FC<Props> = ({
     if (checked) setCheckedKeys((keys) => keys.concat(name));
     else setCheckedKeys((keys) => keys.filter((key) => key !== name));
   };
+
+  const onFilter = (form: any) => setFilters(form);
 
   return (
     <>
@@ -80,6 +119,7 @@ const FavoritesList: FC<Props> = ({
             layout="inline"
             style={{ padding: 4, marginTop: 24 }}
             hidden={!hasAnyCheckedKey}
+            onFinish={onFilter}
           >
             {favoriteApiSources.map((apiSourceKey) => {
               const apiSource = ApiSourcesMap[apiSourceKey];
@@ -104,7 +144,7 @@ const FavoritesList: FC<Props> = ({
             </Form.Item>
           </Form>
 
-          {favoritesList.map((item) => {
+          {filteredItems.map((item) => {
             const apiSource = ApiSourcesMap[item.key];
 
             if (!apiSource) {

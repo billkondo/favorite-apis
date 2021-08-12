@@ -17,6 +17,7 @@ type ApiSourceType<T, S> = {
   renderCheckedInputs: (checkedInputs: Array<string>) => JSX.Element;
 
   search: (query?: S) => Promise<QueryResultType<T>>;
+  filter: (filters: { [key: string]: string }) => (item: T) => boolean;
 };
 
 export default ApiSourceType;

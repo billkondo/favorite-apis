@@ -10,6 +10,7 @@ import FreeToGameRenderCheckedInputs from './FreeToGameRenderCheckedInputs';
 import FreeToGameRenderItem from './FreeToGameRenderItem';
 import FreeToGameRenderSearchBar from './FreeToGameRenderSearchBar';
 import FreeToGameSearch from './FreeToGameSearch';
+import FreeToGameFilter from './FreeToGameFilter';
 
 const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   key: FREE_TO_GAME_KEY,
@@ -26,6 +27,7 @@ const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   renderCheckedInputs: FreeToGameRenderCheckedInputs,
 
   search: FreeToGameSearch,
+  filter: FreeToGameFilter,
 };
 
 export default FreeToGameSource;
