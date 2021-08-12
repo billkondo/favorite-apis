@@ -1,19 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useApisPage = () => {
   const [selectedApiSourceKey, setSelectedApiSourceKey] = useState<
     string | null
   >(localStorage.getItem('api-source-key'));
 
-  const selectApiSourceKey = (apiSourceKey: string) => {
-    setSelectedApiSourceKey(apiSourceKey);
-    localStorage.setItem('api-source-key', apiSourceKey);
-  };
+  useEffect(() => {
+    if (selectedApiSourceKey)
+      localStorage.setItem('api-source-key', selectedApiSourceKey);
+    else localStorage.removeItem('api-source-key');
+  }, [selectedApiSourceKey]);
 
-  const unselectApiSourceKey = () => {
-    setSelectedApiSourceKey(null);
-    localStorage.removeItem('api-source-key');
-  };
+  const selectApiSourceKey = (apiSourceKey: string) =>
+    setSelectedApiSourceKey(apiSourceKey);
+
+  const unselectApiSourceKey = () => setSelectedApiSourceKey(null);
 
   return {
     selectedApiSourceKey,
