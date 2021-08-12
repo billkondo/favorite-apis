@@ -32,6 +32,10 @@ This project is using the following libraries:
 * [Jest](https://jestjs.io/): tests runner
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): makes React components testing easier
 
+## Limitaions
+* In local environment, you should only favorite one item per time. LocalStorage is being used for storing favorites and concurrency is not being handled. In a production environment, this would be the server resposibility
+* In local environment, user data is cleared when you sign out
+
 ## Available Scripts
 
 In the project directory, you can run:
