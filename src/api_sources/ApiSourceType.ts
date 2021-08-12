@@ -14,6 +14,7 @@ type ApiSourceType<T, S> = {
   renderItem: (item: T) => JSX.Element;
   renderSearchBar: () => JSX.Element;
   renderCheckBoxes: (onChange: (e: CheckboxChangeEvent) => void) => JSX.Element;
+  renderCheckedInputs: (checkedInputs: Array<string>) => JSX.Element;
 
   search: (query?: S) => Promise<QueryResultType<T>>;
 };

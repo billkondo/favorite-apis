@@ -6,6 +6,7 @@ import FreeToGameItemType from './FreeToGameItemType';
 import FREE_TO_GAME_KEY from './FreeToGameKey';
 import FreeToGameRenderButton from './FreeToGameRenderButton';
 import FreeToGameRenderCheckBoxes from './FreeToGameRenderCheckBoxes';
+import FreeToGameRenderCheckedInputs from './FreeToGameRenderCheckedInputs';
 import FreeToGameRenderItem from './FreeToGameRenderItem';
 import FreeToGameRenderSearchBar from './FreeToGameRenderSearchBar';
 import FreeToGameSearch from './FreeToGameSearch';
@@ -13,7 +14,7 @@ import FreeToGameSearch from './FreeToGameSearch';
 const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   key: FREE_TO_GAME_KEY,
 
-  apiName: 'FREETOGAME',
+  apiName: 'FreeToGame',
 
   defaultPageSize: 20,
   pageSizes: ['10', '20', '30'],
@@ -22,6 +23,7 @@ const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   renderItem: FreeToGameRenderItem,
   renderSearchBar: FreeToGameRenderSearchBar,
   renderCheckBoxes: FreeToGameRenderCheckBoxes,
+  renderCheckedInputs: FreeToGameRenderCheckedInputs,
 
   search: FreeToGameSearch,
 };

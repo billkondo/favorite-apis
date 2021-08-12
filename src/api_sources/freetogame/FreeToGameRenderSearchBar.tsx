@@ -1,8 +1,8 @@
-import { Form, Input, Select } from 'antd';
+import { Form, Select } from 'antd';
 
 const { Option } = Select;
 
-const categories = [
+const FreeToGameCategories = [
   'mmorpg',
   'shooter',
   'strategy',
@@ -50,34 +50,42 @@ const categories = [
   'mmorts',
 ];
 
-const FreeToGameRenderSearchBar = () => {
+const FreeToGameRenderSearchBar = (
+  names = ['platform', 'category', 'sortBy']
+) => {
   return (
     <>
-      <Form.Item label="Platform" name="platform">
-        <Select allowClear style={{ minWidth: 160 }} placeholder="PC">
-          <Option value="pc">PC</Option>
-          <Option value="browser">Browser</Option>
-          <Option value="all">All</Option>
-        </Select>
-      </Form.Item>
+      {names[0] && (
+        <Form.Item label="Platform" name={names[0]}>
+          <Select allowClear style={{ minWidth: 160 }} placeholder="PC">
+            <Option value="pc">PC</Option>
+            <Option value="browser">Browser</Option>
+            <Option value="all">All</Option>
+          </Select>
+        </Form.Item>
+      )}
 
-      <Form.Item label="Category" name="category">
-        <Select allowClear style={{ minWidth: 160 }} placeholder="shooter">
-          {categories.map((category) => (
-            <Option key={category} value={category}>
-              {category}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+      {names[1] && (
+        <Form.Item label="Category" name={names[1]}>
+          <Select allowClear style={{ minWidth: 160 }} placeholder="shooter">
+            {FreeToGameCategories.map((category) => (
+              <Option key={category} value={category}>
+                {category}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      )}
 
-      <Form.Item name="sortBy" label="Sort By">
-        <Select allowClear style={{ minWidth: 160 }}>
-          <Option value="release-date">Release Date</Option>
-          <Option value="alphabetical">Alphabetical</Option>
-          <Option value="relevance">Relevance</Option>
-        </Select>
-      </Form.Item>
+      {names[2] && (
+        <Form.Item name="sortBy" label={names[2]}>
+          <Select allowClear style={{ minWidth: 160 }}>
+            <Option value="release-date">Release Date</Option>
+            <Option value="alphabetical">Alphabetical</Option>
+            <Option value="relevance">Relevance</Option>
+          </Select>
+        </Form.Item>
+      )}
     </>
   );
 };

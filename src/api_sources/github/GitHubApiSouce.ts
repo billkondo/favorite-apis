@@ -7,6 +7,7 @@ import GITHUB_KEY from './GitHubKey';
 
 import GitHubRenderButton from './GitHubRenderButton';
 import GitHubRenderCheckBoxes from './GitHubRenderCheckBoxes';
+import GitHubRenderCheckedInputs from './GitHubRenderCheckedInputs';
 import GitHubRenderItem from './GitHubRenderItem';
 import GitHubRenderSearchBar from './GitHubRenderSearchBar';
 
@@ -24,6 +25,7 @@ const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   renderItem: GitHubRenderItem,
   renderSearchBar: GitHubRenderSearchBar,
   renderCheckBoxes: GitHubRenderCheckBoxes,
+  renderCheckedInputs: GitHubRenderCheckedInputs,
 
   search: GitHubSearch,
 };

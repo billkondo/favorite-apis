@@ -1,13 +1,13 @@
-import { FC, useState } from 'react';
-import { Divider, Row, Spin } from 'antd';
+import { FC, Fragment, useState } from 'react';
+import { Button, Divider, Form, Row, Spin } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Title from 'antd/lib/typography/Title';
 import Text from 'antd/lib/typography/Text';
+import { SearchOutlined } from '@ant-design/icons';
 
 import { ApiSourcesMap } from 'api_sources';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
-
 type Props = {
   favoritesList: Array<any>;
   favoriteApiSources: Array<any>;
@@ -22,6 +22,7 @@ const FavoritesList: FC<Props> = ({
   loading,
 }) => {
   const [checkedKeys, setCheckedKeys] = useState<Array<string>>([]);
+  const hasAnyCheckedKey = checkedKeys.length > 0;
 
   const size = favoritesList.length;
 
@@ -74,6 +75,34 @@ const FavoritesList: FC<Props> = ({
               </Row>
             );
           })}
+
+          <Form
+            layout="inline"
+            style={{ padding: 4, marginTop: 24 }}
+            hidden={!hasAnyCheckedKey}
+          >
+            {favoriteApiSources.map((apiSourceKey) => {
+              const apiSource = ApiSourcesMap[apiSourceKey];
+
+              if (!apiSource) return <></>;
+
+              return (
+                <Fragment key={apiSourceKey}>
+                  {apiSource.renderCheckedInputs(checkedKeys)}
+                </Fragment>
+              );
+            })}
+
+            <Form.Item>
+              <Button
+                loading={loading}
+                htmlType="submit"
+                type="primary"
+                shape="circle"
+                icon={<SearchOutlined />}
+              ></Button>
+            </Form.Item>
+          </Form>
 
           {favoritesList.map((item) => {
             const apiSource = ApiSourcesMap[item.key];
