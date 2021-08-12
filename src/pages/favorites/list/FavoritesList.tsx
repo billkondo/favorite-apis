@@ -1,5 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Divider, Row, Spin } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Title from 'antd/lib/typography/Title';
 import Text from 'antd/lib/typography/Text';
 
@@ -20,7 +21,22 @@ const FavoritesList: FC<Props> = ({
   done,
   loading,
 }) => {
+  const [checkedKeys, setCheckedKeys] = useState<Array<string>>([]);
+
   const size = favoritesList.length;
+
+  const onCheckBoxChanged = (e: CheckboxChangeEvent) => {
+    const name = e.target.name;
+    const checked = e.target.checked;
+
+    if (!name) {
+      console.warn('name is undefined or empty');
+      return;
+    }
+
+    if (checked) setCheckedKeys((keys) => keys.concat(name));
+    else setCheckedKeys((keys) => keys.filter((key) => key !== name));
+  };
 
   return (
     <>
@@ -54,7 +70,7 @@ const FavoritesList: FC<Props> = ({
 
             return (
               <Row style={{ padding: 4, marginTop: 16 }} key={apiSourceKey}>
-                {apiSource.renderCheckBoxes()}
+                {apiSource.renderCheckBoxes(onCheckBoxChanged)}
               </Row>
             );
           })}

@@ -1,8 +1,12 @@
 import { Col, Row } from 'antd';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import Checkbox, { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
 import Text from 'antd/lib/typography/Text';
 
-const FreeToGameRenderCheckBoxes = () => {
+import FREETOGAME_KEY from './FreeToGameKey';
+
+const FreeToGameRenderCheckBoxes = (
+  onChange: (e: CheckboxChangeEvent) => void
+) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Row>
@@ -13,11 +17,15 @@ const FreeToGameRenderCheckBoxes = () => {
 
       <Row gutter={24} style={{ marginTop: 4 }}>
         <Col>
-          <Checkbox>Platform</Checkbox>
+          <Checkbox name={`${FREETOGAME_KEY}_platform`} onChange={onChange}>
+            Platform
+          </Checkbox>
         </Col>
 
         <Col>
-          <Checkbox>Category</Checkbox>
+          <Checkbox name={`${FREETOGAME_KEY}_category`} onChange={onChange}>
+            Category
+          </Checkbox>
         </Col>
       </Row>
     </div>
