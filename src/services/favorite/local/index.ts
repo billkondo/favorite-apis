@@ -23,7 +23,7 @@ const FavoriteServiceLocal: FavoriteService = {
     if (isItemFavorited) {
       localStorage.setItem(
         FAVORITED_LOCAL_STORAGE_KEY,
-        JSON.stringify(favoritedItems.filter((_item) => _item !== id))
+        JSON.stringify(favoritedItems.filter((_item) => _item.id !== id))
       );
 
       return false;

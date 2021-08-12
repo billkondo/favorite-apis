@@ -5,6 +5,8 @@ import Text from 'antd/lib/typography/Text';
 
 import { ApiSourcesMap } from 'api_sources';
 
+import FavoriteButton from 'components/favorite_button/FavoriteButton';
+
 type Props = {
   favoritesList: Array<any>;
 
@@ -35,8 +37,6 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
           </Row>
 
           {favoritesList.map((item) => {
-            console.log(item.id);
-
             const apiSource = ApiSourcesMap[item.key];
 
             if (!apiSource) {
@@ -45,7 +45,12 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
             }
 
             return (
-              <div key={item.id} style={{ marginTop: 40 }}>
+              <div
+                key={item.id}
+                style={{ marginTop: 40, position: 'relative' }}
+              >
+                <FavoriteButton id={item.id} item={item}></FavoriteButton>
+
                 <Row>{apiSource.renderItem(item)}</Row>
 
                 <Row>
