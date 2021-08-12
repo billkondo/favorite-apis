@@ -1,12 +1,13 @@
 import LoginFormType from 'domain/authentication/LoginFormType';
 import UserType from 'domain/user/UserType';
 
-const loginUseCase = async (form: LoginFormType): Promise<UserType> => {
-  const { email } = form;
+import AuthenticationService from 'services/authentication/AuthenticationService';
 
-  const user: UserType = { id: '1', email };
-
-  return user;
-};
+const loginUseCase =
+  (authenticationServices: AuthenticationService) =>
+  async (form: LoginFormType): Promise<UserType> => {
+    const user = await authenticationServices.login(form);
+    return user;
+  };
 
 export default loginUseCase;

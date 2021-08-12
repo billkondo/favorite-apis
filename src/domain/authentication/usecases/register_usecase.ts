@@ -1,14 +1,13 @@
+import RegisterFormType from 'domain/authentication/RegisterFormType';
 import UserType from 'domain/user/UserType';
 
-import RegisterFormType from 'domain/authentication/RegisterFormType';
+import AuthenticationService from 'services/authentication/AuthenticationService';
 
-const registerUseCase = async (form: RegisterFormType): Promise<UserType> => {
-  const { email } = form;
-
-  return {
-    email,
-    id: '1',
+const registerUseCase =
+  (authenticationServices: AuthenticationService) =>
+  async (form: RegisterFormType): Promise<UserType> => {
+    const user = await authenticationServices.register(form);
+    return user;
   };
-};
 
 export default registerUseCase;
