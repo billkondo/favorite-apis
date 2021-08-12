@@ -44,6 +44,7 @@ const useRegisterForm = () => {
 
   const onSubmit = (form: RegisterFormType) => {
     setForm(form);
+    setErrorMessage('');
     submit();
   };
 

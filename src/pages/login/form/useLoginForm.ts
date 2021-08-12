@@ -50,6 +50,7 @@ const useLoginForm = () => {
 
   const onSubmit = (form: LoginFormType) => {
     setSubmittedForm(form);
+    setErrorMessage('');
     submit();
   };
 
