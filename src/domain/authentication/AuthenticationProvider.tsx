@@ -5,6 +5,7 @@ import useUseCases from 'domain/usecases/useUseCases';
 
 import AuthenticationContext from './AuthenticationContext';
 import LoginFormType from './LoginFormType';
+import RegisterFormType from './RegisterFormType';
 
 const AuthenticationProvider: FC = ({ children }) => {
   const { authenticationUseCases } = useUseCases();
@@ -21,6 +22,14 @@ const AuthenticationProvider: FC = ({ children }) => {
     [authenticationUseCases]
   );
 
+  const register = useCallback(
+    async (form: RegisterFormType) => {
+      const user = await authenticationUseCases.registerUseCase(form);
+      setCurrentUser(user);
+    },
+    [authenticationUseCases]
+  );
+
   const logout = useCallback(async () => {
     await authenticationUseCases.logoutUseCase();
     setCurrentUser(null);
@@ -32,6 +41,7 @@ const AuthenticationProvider: FC = ({ children }) => {
         currentUser: currentUser,
         authenticated: !!currentUser,
         login: login,
+        register: register,
         logout: logout,
       }}
     >
