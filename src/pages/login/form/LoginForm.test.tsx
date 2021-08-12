@@ -35,6 +35,7 @@ describe('LoginForm', () => {
     (AuthenticationUseCases as jest.Mock).mockImplementation(() => ({
       loginUseCase: async () => ({ email: 'email' }),
       readPersistedUserUseCase: () => null,
+      persistUserUseCase: jest.fn(),
     }));
 
     const push = jest.fn();

@@ -8,9 +8,7 @@ import AuthenticationUseCases from 'domain/authentication/usecases/authenticatio
 import LogoutPage from './LogoutPage';
 import UseCasesProvider from 'domain/usecases/UseCasesProvider';
 
-jest.mock('domain/authentication/usecases/authentication_usecases', () =>
-  jest.fn()
-);
+jest.mock('domain/authentication/usecases/authentication_usecases');
 
 type TestParams = {
   authenticated?: boolean;
@@ -32,6 +30,7 @@ describe('LogoutPage', () => {
 
         return { email: MOCKED_EMAIL };
       },
+      persistUserUseCase: jest.fn(),
     }));
 
     render(
