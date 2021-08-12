@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { Row, Spin } from 'antd';
+import { Divider, Row, Spin } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import Text from 'antd/lib/typography/Text';
+
+import { ApiSourcesMap } from 'api_sources';
 
 type Props = {
   favoritesList: Array<any>;
@@ -25,11 +27,34 @@ const FavoritesList: FC<Props> = ({ favoritesList = [], done, loading }) => {
       )}
 
       {done && (
-        <Row style={{ padding: 4 }}>
-          <Text>
-            You have <b>{size}</b> favorited items
-          </Text>
-        </Row>
+        <>
+          <Row style={{ padding: 4 }}>
+            <Text>
+              You have <b>{size}</b> favorited items
+            </Text>
+          </Row>
+
+          {favoritesList.map((item) => {
+            console.log(item.id);
+
+            const apiSource = ApiSourcesMap[item.key];
+
+            if (!apiSource) {
+              console.warn('favorited item without api key');
+              return <></>;
+            }
+
+            return (
+              <div key={item.id} style={{ marginTop: 40 }}>
+                <Row>{apiSource.renderItem(item)}</Row>
+
+                <Row>
+                  <Divider></Divider>
+                </Row>
+              </div>
+            );
+          })}
+        </>
       )}
     </>
   );

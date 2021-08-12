@@ -48,8 +48,8 @@ const FreeToGameSearch = async (
   const { items, items_count } = response.data as FreeToGameResponse;
 
   return {
-    items: items.map(mapResponseItemToItemType),
-    totalCount: items_count,
+    items: items.map(mapResponseItemToItemType).slice(0, 50),
+    totalCount: Math.min(50, items_count),
   };
 };
 
@@ -66,6 +66,7 @@ const mapResponseItemToItemType = (
   thumbnail: item.thumbnail,
   title: item.title,
   url: item.game_url,
+  key: FREETOGAME_KEY,
 });
 
 export default FreeToGameSearch;

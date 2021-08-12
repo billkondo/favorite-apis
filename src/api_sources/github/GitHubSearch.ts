@@ -62,6 +62,7 @@ const mapGitHubResponseItemToGitHubItem = (
     url: item.html_url || '',
     description: item.description || '',
     language: item.language || '',
+    key: GITHUB_KEY,
   };
 };
 

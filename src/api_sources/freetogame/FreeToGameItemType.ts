@@ -13,6 +13,8 @@ type FreeToGameItemType = {
   releaseDate: string;
 
   url: string;
+
+  key: string;
 };
 
 export default FreeToGameItemType;

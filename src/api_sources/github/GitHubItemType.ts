@@ -8,6 +8,8 @@ type GitHubItemType = {
 
   url: string;
   language: string;
+
+  key: string;
 };
 
 export default GitHubItemType;
