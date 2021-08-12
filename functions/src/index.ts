@@ -19,7 +19,7 @@ export const freeToGame = functions.https.onRequest(
 
       if (res.data.status === 0) {
         response.json({
-          item_count: 0,
+          items_count: 0,
           items: [],
         });
 
