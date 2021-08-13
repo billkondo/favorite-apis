@@ -7,7 +7,12 @@ type Props = {
 };
 const ApiSourceButton: FC<Props> = ({ name, onClick }) => {
   return (
-    <Button size="large" type="primary" onClick={onClick}>
+    <Button
+      size="large"
+      type="primary"
+      title={`${name} button`}
+      onClick={onClick}
+    >
       {name}
     </Button>
   );

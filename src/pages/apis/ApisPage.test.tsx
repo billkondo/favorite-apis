@@ -14,10 +14,14 @@ jest.mock('pages/apis/search_list/useApisPageSearchList', () => ({
     renderSearchBar: () => <></>,
     repaginate: () => jest.fn(),
     page: 1,
+    fields: [],
   }),
 }));
 
 describe('ApisPage', () => {
+  const GITHUB_BUTTON_TITLE = 'GitHub button';
+  const FREETOGAME_BUTTON_TITLE = 'FreeToGame button';
+
   const setup = () => {
     mockMatchMedia();
 
@@ -35,8 +39,8 @@ describe('ApisPage', () => {
   test('it should render api source buttons', async () => {
     setup();
 
-    const gitHubApiButton = await screen.findByTitle('GITHUB BUTTON');
-    const freeToGameButton = await screen.findByTitle('FREETOGAME BUTTON');
+    const gitHubApiButton = await screen.findByTitle(GITHUB_BUTTON_TITLE);
+    const freeToGameButton = await screen.findByTitle(FREETOGAME_BUTTON_TITLE);
 
     expect(gitHubApiButton).toBeVisible();
     expect(freeToGameButton).toBeVisible();
@@ -45,7 +49,7 @@ describe('ApisPage', () => {
   test('it should go to GitHub search list when GitHub button is clicked', async () => {
     setup();
 
-    const gitHubApiButton = await screen.findByTitle('GITHUB BUTTON');
+    const gitHubApiButton = await screen.findByTitle(GITHUB_BUTTON_TITLE);
     userEvent.click(gitHubApiButton);
 
     const gitHubTitle = await screen.findByTitle('GITHUB API');
@@ -55,7 +59,7 @@ describe('ApisPage', () => {
   test('it should return to api source options when back button is clicked', async () => {
     setup();
 
-    const gitHubApiButton = await screen.findByTitle('GITHUB BUTTON');
+    const gitHubApiButton = await screen.findByTitle(GITHUB_BUTTON_TITLE);
     userEvent.click(gitHubApiButton);
 
     expect(gitHubApiButton).not.toBeVisible();
@@ -64,7 +68,7 @@ describe('ApisPage', () => {
     userEvent.click(backButton);
 
     await waitFor(() =>
-      expect(screen.getByTitle('GITHUB BUTTON')).toBeVisible()
+      expect(screen.getByTitle(GITHUB_BUTTON_TITLE)).toBeVisible()
     );
     expect(backButton).not.toBeVisible();
   });
