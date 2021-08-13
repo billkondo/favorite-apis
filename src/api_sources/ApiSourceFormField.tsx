@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { Form, Input, Select } from 'antd';
+import { Checkbox, Form, Input, Select } from 'antd';
 
 import ApiSourceField, {
+  CheckboxApiSourceField,
+  CHECKBOX_API_SOURCE_FIELD,
   InputApiSourceField,
   INPUT_API_SOURCE_FIELD,
   OptionApiSourceField,
@@ -18,6 +20,7 @@ type Props = {
 const ApiSourceFormField: FC<Props> = ({ field, initialValue = '' }) => {
   const { type } = field;
   const isInput = type === INPUT_API_SOURCE_FIELD;
+  const isCheckbox = type === CHECKBOX_API_SOURCE_FIELD;
 
   if (isInput)
     return (
@@ -25,6 +28,13 @@ const ApiSourceFormField: FC<Props> = ({ field, initialValue = '' }) => {
         field={field as InputApiSourceField}
         initialValue={initialValue}
       ></InputApiSourceFormField>
+    );
+
+  if (isCheckbox)
+    return (
+      <CheckboxApiSourceFormField
+        field={field as CheckboxApiSourceField}
+      ></CheckboxApiSourceFormField>
     );
 
   return (
@@ -100,6 +110,23 @@ const SelectApiSourceFormField: FC<SelectProps> = ({ field, initialValue }) => {
           </>
         )}
       </Select>
+    </Form.Item>
+  );
+};
+
+type CheckboxProps = {
+  field: CheckboxApiSourceField;
+};
+const CheckboxApiSourceFormField: FC<CheckboxProps> = ({ field }) => {
+  const { label, name, apiSourceKey } = field;
+
+  return (
+    <Form.Item
+      label={label}
+      name={[apiSourceKey, name]}
+      valuePropName="checked"
+    >
+      <Checkbox></Checkbox>
     </Form.Item>
   );
 };

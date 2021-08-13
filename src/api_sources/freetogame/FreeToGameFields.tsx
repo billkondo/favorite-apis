@@ -1,4 +1,6 @@
 import ApiSourceField, {
+  CheckboxApiSourceField,
+  CHECKBOX_API_SOURCE_FIELD,
   OptionApiSourceField,
   SELECT_API_SOURCE_FIELD,
 } from 'api_sources/ApiSourceField';
@@ -58,7 +60,7 @@ const categoryOptions: Array<OptionApiSourceField> = FreeToGameCategories.map(
   })
 );
 
-const FreeToGameFields: Array<ApiSourceField> = [
+export const FreeToGameApiFields: Array<ApiSourceField> = [
   {
     type: SELECT_API_SOURCE_FIELD,
     apiSourceKey: FREETOGAME_KEY,
@@ -114,4 +116,17 @@ const FreeToGameFields: Array<ApiSourceField> = [
   },
 ];
 
-export default FreeToGameFields;
+export const FreeToGameFavoriteFields: Array<CheckboxApiSourceField> = [
+  {
+    type: CHECKBOX_API_SOURCE_FIELD,
+    apiSourceKey: FREETOGAME_KEY,
+    label: 'Platform',
+    name: 'platform',
+  },
+  {
+    type: CHECKBOX_API_SOURCE_FIELD,
+    apiSourceKey: FREETOGAME_KEY,
+    label: 'Category',
+    name: 'category',
+  },
+];

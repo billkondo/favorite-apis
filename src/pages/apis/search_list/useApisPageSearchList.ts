@@ -73,7 +73,7 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   return {
     initialQuery: savedQuery,
 
-    fields: apiSource.fields,
+    fields: apiSource.apiFields,
 
     totalCount,
     items,

@@ -1,28 +1,37 @@
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, Fragment, useEffect, useMemo, useState } from 'react';
 import { Button, Divider, Form, Row, Spin } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Title from 'antd/lib/typography/Title';
 import Text from 'antd/lib/typography/Text';
 import { SearchOutlined } from '@ant-design/icons';
 
 import { ApiSourcesMap } from 'api_sources';
+import ApiSourceCheckboxes from 'api_sources/ApiSourceCheckboxes';
+import ApiSourceCheckedFields from 'api_sources/ApiSourceCheckedFields';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
 type Props = {
   favoritesList: Array<any>;
-  favoriteApiSources: Array<any>;
+  favoriteApiSourceKeys: Array<string>;
 
   done: boolean;
   loading: boolean;
 };
 const FavoritesList: FC<Props> = ({
   favoritesList = [],
-  favoriteApiSources = [],
+  favoriteApiSourceKeys = [],
   done,
   loading,
 }) => {
-  const [checkedKeys, setCheckedKeys] = useState<Array<string>>([]);
-  const hasAnyCheckedKey = checkedKeys.length > 0;
+  const [checkedFields, setCheckedFields] = useState<{
+    [key: string]: { [key: string]: string };
+  }>({});
+  const hasAnyCheckedField = useMemo(() => {
+    for (const apiSourceKey of Object.keys(checkedFields))
+      for (const key of Object.keys(checkedFields[apiSourceKey]))
+        if (checkedFields[apiSourceKey][key]) return true;
+
+    return false;
+  }, [checkedFields]);
 
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [filteredItems, setFilteredItems] = useState<Array<any>>(favoritesList);
@@ -44,37 +53,24 @@ const FavoritesList: FC<Props> = ({
     );
   }, [favoritesList, filters]);
 
-  useEffect(() => {
-    setFilters((filters) => {
-      const newFilters = {
-        ...filters,
-      };
-      const filterKeys = Object.keys(filters);
+  // useEffect(() => {
+  //   setFilters((filters) => {
+  //     const newFilters = {
+  //       ...filters,
+  //     };
+  //     const filterKeys = Object.keys(filters);
 
-      // Add new checked inputs
-      for (const checkedKey of checkedKeys)
-        if (!newFilters[checkedKey]) newFilters[checkedKey] = '';
+  //     // Add new checked inputs
+  //     for (const checkedKey of checkedKeys)
+  //       if (!newFilters[checkedKey]) newFilters[checkedKey] = '';
 
-      // Remove unchecked inputs
-      for (const filterKey of filterKeys)
-        if (!checkedKeys.includes(filterKey)) delete newFilters[filterKey];
+  //     // Remove unchecked inputs
+  //     for (const filterKey of filterKeys)
+  //       if (!checkedKeys.includes(filterKey)) delete newFilters[filterKey];
 
-      return newFilters;
-    });
-  }, [checkedKeys]);
-
-  const onCheckBoxChanged = (e: CheckboxChangeEvent) => {
-    const name = e.target.name;
-    const checked = e.target.checked;
-
-    if (!name) {
-      console.warn('name is undefined or empty');
-      return;
-    }
-
-    if (checked) setCheckedKeys((keys) => keys.concat(name));
-    else setCheckedKeys((keys) => keys.filter((key) => key !== name));
-  };
+  //     return newFilters;
+  //   });
+  // }, [checkedKeys]);
 
   const onFilter = (form: any) => setFilters(form);
 
@@ -98,37 +94,36 @@ const FavoritesList: FC<Props> = ({
             </Text>
           </Row>
 
-          {favoriteApiSources.map((apiSourceKey) => {
-            const apiSource = ApiSourcesMap[apiSourceKey];
-
-            if (!apiSource) {
-              console.warn(
-                `apiSourceKey ${apiSourceKey} does not exist in ApiSourceMap`
+          <Form
+            style={{ padding: 4, marginTop: 24 }}
+            onValuesChange={(changed, values) => {
+              setCheckedFields(values);
+            }}
+          >
+            {favoriteApiSourceKeys.map((apiSourceKey) => {
+              return (
+                <Fragment key={apiSourceKey}>
+                  <ApiSourceCheckboxes
+                    apiSourceKey={apiSourceKey}
+                  ></ApiSourceCheckboxes>
+                </Fragment>
               );
-              return <></>;
-            }
-
-            return (
-              <Row style={{ padding: 4, marginTop: 16 }} key={apiSourceKey}>
-                {apiSource.renderCheckBoxes(onCheckBoxChanged)}
-              </Row>
-            );
-          })}
+            })}
+          </Form>
 
           <Form
             layout="inline"
             style={{ padding: 4, marginTop: 24 }}
-            hidden={!hasAnyCheckedKey}
+            hidden={!hasAnyCheckedField}
             onFinish={onFilter}
           >
-            {favoriteApiSources.map((apiSourceKey) => {
-              const apiSource = ApiSourcesMap[apiSourceKey];
-
-              if (!apiSource) return <></>;
-
+            {favoriteApiSourceKeys.map((apiSourceKey) => {
               return (
                 <Fragment key={apiSourceKey}>
-                  {apiSource.renderCheckedInputs(checkedKeys)}
+                  <ApiSourceCheckedFields
+                    apiSourceKey={apiSourceKey}
+                    checkedFields={checkedFields[apiSourceKey]}
+                  ></ApiSourceCheckedFields>
                 </Fragment>
               );
             })}

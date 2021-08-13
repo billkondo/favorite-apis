@@ -1,13 +1,15 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
 import ApiSourceField, {
+  CheckboxApiSourceField,
+  CHECKBOX_API_SOURCE_FIELD,
   INPUT_API_SOURCE_FIELD,
   SELECT_API_SOURCE_FIELD,
 } from 'api_sources/ApiSourceField';
 
 import GITHUB_KEY from './GitHubKey';
 
-const GitHubFields: Array<ApiSourceField> = [
+export const GitHubApiFields: Array<ApiSourceField> = [
   {
     type: INPUT_API_SOURCE_FIELD,
     apiSourceKey: GITHUB_KEY,
@@ -68,4 +70,11 @@ const GitHubFields: Array<ApiSourceField> = [
   },
 ];
 
-export default GitHubFields;
+export const GitHubFavoriteFields: Array<CheckboxApiSourceField> = [
+  {
+    name: 'name',
+    apiSourceKey: GITHUB_KEY,
+    label: 'Name',
+    type: CHECKBOX_API_SOURCE_FIELD,
+  },
+];

@@ -5,29 +5,24 @@ import GitHubItemType from './GitHubItemType';
 
 import GITHUB_KEY from './GitHubKey';
 
-import GitHubRenderCheckBoxes from './GitHubRenderCheckBoxes';
-import GitHubRenderCheckedInputs from './GitHubRenderCheckedInputs';
 import GitHubRenderItem from './GitHubRenderItem';
-import GitHubRenderSearchBar from './GitHubRenderSearchBar';
 
 import GitHubSearch from './GitHubSearch';
 import GitHubFilter from './GitHubFilter';
 
-import GitHubFields from './GitHubFields';
+import { GitHubApiFields, GitHubFavoriteFields } from './GitHubFields';
 
 const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
   apiName: 'GitHub',
 
-  fields: GitHubFields,
+  apiFields: GitHubApiFields,
+  favoriteFields: GitHubFavoriteFields,
 
   defaultPageSize: 25,
   pageSizes: ['25', '50', '100'],
 
   renderItem: GitHubRenderItem,
-  renderSearchBar: GitHubRenderSearchBar,
-  renderCheckBoxes: GitHubRenderCheckBoxes,
-  renderCheckedInputs: GitHubRenderCheckedInputs,
 
   search: GitHubSearch,
   filter: GitHubFilter,
