@@ -71,7 +71,7 @@ const FreeToGameFields: Array<ApiSourceField> = [
         label: 'PC',
       },
       {
-        value: 'broser',
+        value: 'browser',
         label: 'Browser',
       },
       {
