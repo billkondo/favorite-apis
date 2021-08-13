@@ -25,7 +25,8 @@ type GitHubResponse = {
 const GitHubSearch = async (
   query: GitHubForm = { name: 'react', sortBy: '', page: 1, pageSize: 25 }
 ): Promise<QueryResultType<GitHubItemType>> => {
-  const { name = 'react', sortBy = '', page = 1, pageSize = 25 } = query;
+  const { sortBy = '', page = 1, pageSize = 25 } = query;
+  const name = query.name || 'react';
 
   let queryString = `q=${name}`;
 
