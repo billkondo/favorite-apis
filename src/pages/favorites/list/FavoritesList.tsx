@@ -9,6 +9,7 @@ import ApiSourceCheckboxes from 'api_sources/ApiSourceCheckboxes';
 import ApiSourceCheckedFields from 'api_sources/ApiSourceCheckedFields';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
+
 type Props = {
   favoritesList: Array<any>;
   favoriteApiSourceKeys: Array<string>;
@@ -23,9 +24,9 @@ const FavoritesList: FC<Props> = ({
   loading,
 }) => {
   const [checkedFields, setCheckedFields] = useState<{
-    [key: string]: { [key: string]: string };
+    [apiSourceKey: string]: { [field: string]: string };
   }>({});
-  const hasAnyCheckedField = useMemo(() => {
+  const isAnyFieldChecked = useMemo(() => {
     for (const apiSourceKey of Object.keys(checkedFields))
       for (const key of Object.keys(checkedFields[apiSourceKey]))
         if (checkedFields[apiSourceKey][key]) return true;
@@ -33,46 +34,40 @@ const FavoritesList: FC<Props> = ({
     return false;
   }, [checkedFields]);
 
-  const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [filters, setFilters] = useState<{
+    [apiSourceKey: string]: { [field: string]: string };
+  }>({});
   const [filteredItems, setFilteredItems] = useState<Array<any>>(favoritesList);
 
   const size = favoritesList.length;
 
+  // Filter favorited items whenever filters change
   useEffect(() => {
     setFilteredItems(
       favoritesList.filter((item) => {
-        const apiSource = ApiSourcesMap[item.key];
+        const apiSourceKey = item.key as string;
+        const apiSource = ApiSourcesMap[apiSourceKey];
 
         if (!apiSource) {
           console.warn('apiSource is undefined');
           return item;
         }
 
-        return apiSource.filter(filters)(item);
+        if (!isAnyFieldChecked) return true;
+
+        const isApiSourceChecked = !!apiSource.favoriteFields.find(
+          (field) => checkedFields[apiSourceKey][field.name]
+        );
+        if (!isApiSourceChecked) return false;
+
+        return apiSource.filter(filters[apiSourceKey])(item);
       })
     );
-  }, [favoritesList, filters]);
+  }, [favoritesList, filters, isAnyFieldChecked, checkedFields]);
 
-  // useEffect(() => {
-  //   setFilters((filters) => {
-  //     const newFilters = {
-  //       ...filters,
-  //     };
-  //     const filterKeys = Object.keys(filters);
-
-  //     // Add new checked inputs
-  //     for (const checkedKey of checkedKeys)
-  //       if (!newFilters[checkedKey]) newFilters[checkedKey] = '';
-
-  //     // Remove unchecked inputs
-  //     for (const filterKey of filterKeys)
-  //       if (!checkedKeys.includes(filterKey)) delete newFilters[filterKey];
-
-  //     return newFilters;
-  //   });
-  // }, [checkedKeys]);
-
-  const onFilter = (form: any) => setFilters(form);
+  const onFilter = (form: {
+    [apiSourceKey: string]: { [field: string]: string };
+  }) => setFilters(form);
 
   return (
     <>
@@ -96,9 +91,7 @@ const FavoritesList: FC<Props> = ({
 
           <Form
             style={{ padding: 4, marginTop: 24 }}
-            onValuesChange={(changed, values) => {
-              setCheckedFields(values);
-            }}
+            onValuesChange={(_, values) => setCheckedFields(values)}
           >
             {favoriteApiSourceKeys.map((apiSourceKey) => {
               return (
@@ -114,7 +107,7 @@ const FavoritesList: FC<Props> = ({
           <Form
             layout="inline"
             style={{ padding: 4, marginTop: 24 }}
-            hidden={!hasAnyCheckedField}
+            hidden={!isAnyFieldChecked}
             onFinish={onFilter}
           >
             {favoriteApiSourceKeys.map((apiSourceKey) => {
