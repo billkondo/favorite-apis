@@ -58,7 +58,7 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   }, [page, pageSize, query]);
 
   const filter = (query: any) => {
-    setQuery(query);
+    setQuery(query[apiSourceKey]);
     setPage(1);
     submit();
   };
@@ -73,13 +73,14 @@ const useApisPageSearchList = (apiSourceKey: string) => {
   return {
     initialQuery: savedQuery,
 
+    fields: apiSource.fields,
+
     totalCount,
     items,
 
     apiName: apiSource.apiName,
 
     renderItem: apiSource.renderItem,
-    renderSearchBar: apiSource.renderSearchBar,
 
     filter,
 

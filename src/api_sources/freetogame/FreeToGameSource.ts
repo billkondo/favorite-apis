@@ -12,10 +12,14 @@ import FreeToGameRenderSearchBar from './FreeToGameRenderSearchBar';
 import FreeToGameSearch from './FreeToGameSearch';
 import FreeToGameFilter from './FreeToGameFilter';
 
+import FreeToGameFields from './FreeToGameFields';
+
 const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   key: FREE_TO_GAME_KEY,
 
   apiName: 'FreeToGame',
+
+  fields: FreeToGameFields,
 
   defaultPageSize: 20,
   pageSizes: ['10', '20', '30'],

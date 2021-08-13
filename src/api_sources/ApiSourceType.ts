@@ -2,10 +2,13 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import QueryResultType from 'domain/query/QueryResultType';
 
+import ApiSourceField from './ApiSourceField';
+
 type ApiSourceType<T, S> = {
   key: string;
-
   apiName: string;
+
+  fields: Array<ApiSourceField>;
 
   defaultPageSize?: number;
   pageSizes?: Array<string>;

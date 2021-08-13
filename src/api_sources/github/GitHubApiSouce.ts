@@ -14,10 +14,13 @@ import GitHubRenderSearchBar from './GitHubRenderSearchBar';
 import GitHubSearch from './GitHubSearch';
 import GitHubFilter from './GitHubFilter';
 
+import GitHubFields from './GitHubFields';
+
 const GitHubApiSource: ApiSourceType<GitHubItemType, GitHubForm> = {
   key: GITHUB_KEY,
-
   apiName: 'GitHub',
+
+  fields: GitHubFields,
 
   defaultPageSize: 25,
   pageSizes: ['25', '50', '100'],
