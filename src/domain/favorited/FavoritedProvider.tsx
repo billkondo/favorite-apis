@@ -14,9 +14,9 @@ const FavoritedProvider: FC = ({ children }) => {
 
   const [favoritedList, setFavoritedList] = useState<Array<any>>([]);
   const [favoritedMap, setFavoritedMap] = useState<{ [key: string]: any }>({});
-  const [favoritedApiSources, setFavoritedApiSources] = useState<Array<any>>(
-    []
-  );
+  const [favoritedApiSourceKeys, setFavoritedApiSourceKeys] = useState<
+    Array<string>
+  >([]);
 
   const [updatedList, setUpdatedList] = useState<Array<any> | null>(null);
 
@@ -38,7 +38,7 @@ const FavoritedProvider: FC = ({ children }) => {
     for (const item of updatedList) newFavoritedMap[item.id] = item;
 
     const markedSources: { [key: string]: any } = {};
-    const selectedSources: Array<any> = [];
+    const selectedSources: Array<string> = [];
     for (const item of updatedList)
       if (!markedSources[item.key]) {
         markedSources[item.key] = item;
@@ -47,7 +47,7 @@ const FavoritedProvider: FC = ({ children }) => {
 
     setFavoritedMap(newFavoritedMap);
     setFavoritedList(updatedList);
-    setFavoritedApiSources(selectedSources);
+    setFavoritedApiSourceKeys(selectedSources);
   }, [updatedList]);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const FavoritedProvider: FC = ({ children }) => {
       value={{
         favoritedList,
         favoritedMap,
-        favoritedApiSources,
+        favoritedApiSourceKeys,
 
         isFavorited,
         favoriteItem,

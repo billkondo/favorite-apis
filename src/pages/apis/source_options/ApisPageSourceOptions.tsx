@@ -3,6 +3,7 @@ import { Col, Row } from 'antd';
 import Title from 'antd/lib/typography/Title';
 
 import ApiSources from 'api_sources';
+import ApiSourceButton from 'api_sources/ApiSourceButton';
 
 type Props = {
   selectApiSourceKey: (apiSourceKey: string) => void;
@@ -16,10 +17,13 @@ const ApisPageSourceOptions: FC<Props> = ({ selectApiSourceKey }) => {
 
       <Row gutter={24} style={{ marginTop: 24 }}>
         {ApiSources.map((apiSource) => {
-          const onClick = () => selectApiSourceKey(apiSource.key);
-
           return (
-            <Col key={apiSource.key}>{apiSource.renderButton(onClick)}</Col>
+            <Col key={apiSource.key}>
+              <ApiSourceButton
+                name={apiSource.apiName}
+                onClick={() => selectApiSourceKey(apiSource.key)}
+              ></ApiSourceButton>
+            </Col>
           );
         })}
       </Row>

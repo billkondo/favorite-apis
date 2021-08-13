@@ -1,8 +1,10 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { Button, Col, Divider, Form, Pagination, Row, Spin } from 'antd';
 import { ArrowLeftOutlined, SearchOutlined } from '@ant-design/icons';
 
 import Text from 'antd/lib/typography/Text';
+
+import ApiSourceFormField from 'api_sources/ApiSourceFormField';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
 
@@ -16,13 +18,14 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
   const {
     initialQuery,
 
+    fields,
+
     totalCount = 0,
     items,
 
     apiName,
 
     renderItem,
-    renderSearchBar,
 
     filter,
 
@@ -59,7 +62,14 @@ const ApisPageSearchList: FC<Props> = ({ selectedKey, unselectKey }) => {
 
       <Row style={{ padding: 48, paddingBottom: 0 }}>
         <Form layout="inline" onFinish={filter}>
-          {renderSearchBar({ initialForm: initialQuery })}
+          {fields.map((field) => (
+            <Fragment key={field.name}>
+              <ApiSourceFormField
+                field={field}
+                initialValue={initialQuery[field.name]}
+              ></ApiSourceFormField>
+            </Fragment>
+          ))}
 
           <Form.Item>
             <Button

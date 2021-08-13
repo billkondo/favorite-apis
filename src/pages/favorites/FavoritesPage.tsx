@@ -6,8 +6,13 @@ import FavoritesList from './list/FavoritesList';
 import useFavoritesPage from './useFavoritesPage';
 
 const FavoritesPage = () => {
-  const { authenticated, favoritedList, favoritedApiSources, done, loading } =
-    useFavoritesPage();
+  const {
+    authenticated,
+    favoritedList,
+    favoritedApiSourceKeys,
+    done,
+    loading,
+  } = useFavoritesPage();
 
   return (
     <>
@@ -20,7 +25,7 @@ const FavoritesPage = () => {
       {authenticated && (
         <FavoritesList
           favoritesList={favoritedList}
-          favoriteApiSources={favoritedApiSources}
+          favoriteApiSourceKeys={favoritedApiSourceKeys}
           done={done}
           loading={loading}
         ></FavoritesList>
