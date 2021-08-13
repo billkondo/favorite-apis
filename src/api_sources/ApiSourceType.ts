@@ -13,7 +13,6 @@ type ApiSourceType<T, S> = {
   defaultPageSize?: number;
   pageSizes?: Array<string>;
 
-  renderButton: (onClick: () => void) => JSX.Element;
   renderItem: (item: T) => JSX.Element;
   renderSearchBar: (params?: {
     initialForm?: S;

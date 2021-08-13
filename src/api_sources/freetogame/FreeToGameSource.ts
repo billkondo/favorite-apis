@@ -4,7 +4,7 @@ import FreeToGameForm from './FreeToGameForm';
 import FreeToGameItemType from './FreeToGameItemType';
 
 import FREE_TO_GAME_KEY from './FreeToGameKey';
-import FreeToGameRenderButton from './FreeToGameRenderButton';
+
 import FreeToGameRenderCheckBoxes from './FreeToGameRenderCheckBoxes';
 import FreeToGameRenderCheckedInputs from './FreeToGameRenderCheckedInputs';
 import FreeToGameRenderItem from './FreeToGameRenderItem';
@@ -24,7 +24,6 @@ const FreeToGameSource: ApiSourceType<FreeToGameItemType, FreeToGameForm> = {
   defaultPageSize: 20,
   pageSizes: ['10', '20', '30'],
 
-  renderButton: FreeToGameRenderButton,
   renderItem: FreeToGameRenderItem,
   renderSearchBar: FreeToGameRenderSearchBar,
   renderCheckBoxes: FreeToGameRenderCheckBoxes,
