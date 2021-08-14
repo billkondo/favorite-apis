@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { notification } from 'antd';
 
 import Routes from 'config/routes';
+import { LOCAL } from 'config/environment';
 
 import ApisPage from 'pages/apis/ApisPage';
 import FavoritesPage from 'pages/favorites/FavoritesPage';
@@ -12,6 +15,15 @@ import NotFoundPage from 'pages/NotFoundPage';
 import AppLayout from 'AppLayout';
 
 const App = () => {
+  useEffect(() => {
+    if (LOCAL)
+      notification.warn({
+        message: 'Local development',
+        description: 'All data will be saved in LocalStorage',
+        duration: 0,
+      });
+  }, []);
+
   return (
     <AppLayout>
       <Switch>

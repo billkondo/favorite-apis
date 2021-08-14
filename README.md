@@ -39,6 +39,16 @@ This project is using the following libraries:
 
 In the project directory, you can run:
 
+### `npm local`
+
+Runs the app in the local development mode.\
+All data will be stored in LocalStorage.
+
+### `npm emulator`
+
+Runs the app in development mode connected with Firebase Emulator.\
+You need to start Firebase Emulator by running ``firebase emulators:start``
+
 ### `npm start`
 
 Runs the app in the development mode.\
