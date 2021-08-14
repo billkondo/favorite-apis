@@ -26,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "dev": "REACT_APP_EMULATOR=true npm start",
+    "emulator": "REACT_APP_EMULATOR=true npm start",
+    "local": "REACT_APP_LOCAL=true npm start",
     "build-functions": "cd functions && npm run build"
   },
   "eslintConfig": {
