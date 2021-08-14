@@ -22,7 +22,17 @@ export const favorite = functions.https.onCall(
         'item should not be empty'
       );
 
-    const querySnapshot = await FavoritesCollection.where('id', '==', item.id)
+    if (!item.id || typeof item.id !== 'string')
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'item should have id field'
+      );
+
+    const querySnapshot = await FavoritesCollection.where(
+      'item.id',
+      '==',
+      item.id
+    )
       .where('uid', '==', uid)
       .get();
 
