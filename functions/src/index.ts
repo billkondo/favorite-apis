@@ -1,6 +1,10 @@
 import * as functions from 'firebase-functions';
 import axios from 'axios';
 
+import './sdk';
+
+export * from './favorites';
+
 const BASE_URL = 'https://www.freetogame.com/api/games';
 
 export const freeToGame = functions.https.onRequest(

@@ -8,6 +8,8 @@ import UseCasesProvider from 'domain/usecases/UseCasesProvider';
 import AuthenticationProvider from 'domain/authentication/AuthenticationProvider';
 import FavoritedProvider from 'domain/favorited/FavoritedProvider';
 
+import 'services/firebase';
+
 import App from 'App';
 import AppRouter from 'AppRouter';
 
