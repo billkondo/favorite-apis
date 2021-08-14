@@ -18,7 +18,7 @@ const FavoritedProvider: FC = ({ children }) => {
     Array<string>
   >([]);
 
-  const [updatedList, setUpdatedList] = useState<Array<any> | null>(null);
+  const [updatedList, setUpdatedList] = useState<Array<any>>([]);
 
   const { done, loading, submit } = useSubmit(
     async () => {
@@ -31,9 +31,6 @@ const FavoritedProvider: FC = ({ children }) => {
   );
 
   useEffect(() => {
-    if (updatedList === null) return;
-    setUpdatedList(null);
-
     const newFavoritedMap: { [key: string]: any } = {};
     for (const item of updatedList) newFavoritedMap[item.id] = item;
 
@@ -52,10 +49,7 @@ const FavoritedProvider: FC = ({ children }) => {
 
   useEffect(() => {
     if (authenticated) submit();
-    else {
-      setFavoritedList([]);
-      setFavoritedMap({});
-    }
+    else setUpdatedList([]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
@@ -71,11 +65,13 @@ const FavoritedProvider: FC = ({ children }) => {
         favoritedUseCases.favoriteItemUseCase(item)
       );
 
-      if (favorited) setUpdatedList(favoritedList.concat(item));
+      if (favorited) setUpdatedList((updatedList) => updatedList.concat(item));
       else
-        setUpdatedList(favoritedList.filter((_item) => _item.id !== item.id));
+        setUpdatedList((updatedList) =>
+          updatedList.filter((_item) => _item.id !== item.id)
+        );
     },
-    [favoritedUseCases, favoritedList]
+    [favoritedUseCases]
   );
 
   return (
