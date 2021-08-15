@@ -9,12 +9,9 @@ type Props = {
   item: any;
 };
 const FavoriteButton: FC<Props> = ({ id, item }) => {
-  const { authenticated, favorited, loading, favorite } = useFavoriteButton(
-    id,
-    item
-  );
+  const { visible, favorited, loading, favorite } = useFavoriteButton(id, item);
 
-  if (!authenticated) return <></>;
+  if (!visible) return <></>;
 
   return (
     <Button

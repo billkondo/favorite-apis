@@ -6,7 +6,7 @@ import useFavorited from 'domain/favorited/useFavorited';
 import useSubmit from 'utils/useSubmit';
 
 const useFavoriteButton = (id: string, item: any) => {
-  const { isFavorited, favoriteItem } = useFavorited();
+  const { isFavorited, favoriteItem, done } = useFavorited();
   const { authenticated } = useAuthentication();
 
   const favorited = useMemo(() => isFavorited(id), [id, isFavorited]);
@@ -17,9 +17,9 @@ const useFavoriteButton = (id: string, item: any) => {
 
   return {
     favorited,
-    authenticated,
     loading,
     favorite: submit,
+    visible: authenticated && done,
   };
 };
 
