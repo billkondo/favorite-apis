@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react';
+import { Button, notification } from 'antd';
 
 import useUseCases from 'domain/usecases/useUseCases';
 import useAuthentication from 'domain/authentication/useAuthentication';
@@ -20,7 +21,7 @@ const FavoritedProvider: FC = ({ children }) => {
 
   const [updatedList, setUpdatedList] = useState<Array<any>>([]);
 
-  const { done, loading, submit } = useSubmit(
+  const { done, loading, submit, failed } = useSubmit(
     async () => {
       const favoritedItems = await delayed(
         favoritedUseCases.listFavoritedItemsUseCase()
@@ -29,6 +30,31 @@ const FavoritedProvider: FC = ({ children }) => {
     },
     (favoritedItems) => setUpdatedList(favoritedItems)
   );
+
+  useEffect(() => {
+    if (!failed) {
+      notification.close('favorites-error');
+      return;
+    }
+
+    notification.error({
+      key: 'favorites-error',
+      message: 'Favorites load failed',
+      duration: 0,
+      btn: (
+        <Button
+          type="primary"
+          danger
+          onClick={() => {
+            notification.close('favorites-error');
+            submit();
+          }}
+        >
+          Try Again
+        </Button>
+      ),
+    });
+  }, [failed, submit]);
 
   useEffect(() => {
     const newFavoritedMap: { [key: string]: any } = {};
@@ -83,9 +109,11 @@ const FavoritedProvider: FC = ({ children }) => {
 
         isFavorited,
         favoriteItem,
+        getFavoritedList: submit,
 
         done,
         loading,
+        failed,
       }}
     >
       {children}
