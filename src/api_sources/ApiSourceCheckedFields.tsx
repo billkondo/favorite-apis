@@ -6,11 +6,13 @@ import ApiSourceFormField from './ApiSourceFormField';
 
 type Props = {
   apiSourceKey: string;
-  checkedFields: { [key: string]: string };
+  checkedFields: { [key: string]: boolean };
+  initialSearchFields?: { [key: string]: string };
 };
 const ApiSourceCheckedFields: FC<Props> = ({
   apiSourceKey,
   checkedFields = {},
+  initialSearchFields = {},
 }) => {
   const apiSource = ApiSourcesMap[apiSourceKey];
   const apiFields = apiSource.apiFields;
@@ -28,7 +30,10 @@ const ApiSourceCheckedFields: FC<Props> = ({
 
         return (
           <Fragment key={apiField.name}>
-            <ApiSourceFormField field={apiField}></ApiSourceFormField>
+            <ApiSourceFormField
+              field={apiField}
+              initialValue={initialSearchFields[apiField.name]}
+            ></ApiSourceFormField>
           </Fragment>
         );
       })}

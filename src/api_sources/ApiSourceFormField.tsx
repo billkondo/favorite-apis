@@ -16,8 +16,13 @@ const { Option, OptGroup } = Select;
 type Props = {
   field: ApiSourceField;
   initialValue?: string;
+  initialChecked?: boolean;
 };
-const ApiSourceFormField: FC<Props> = ({ field, initialValue = '' }) => {
+const ApiSourceFormField: FC<Props> = ({
+  field,
+  initialValue = '',
+  initialChecked = false,
+}) => {
   const { type } = field;
   const isInput = type === INPUT_API_SOURCE_FIELD;
   const isCheckbox = type === CHECKBOX_API_SOURCE_FIELD;
@@ -34,6 +39,7 @@ const ApiSourceFormField: FC<Props> = ({ field, initialValue = '' }) => {
     return (
       <CheckboxApiSourceFormField
         field={field as CheckboxApiSourceField}
+        initialChecked={initialChecked}
       ></CheckboxApiSourceFormField>
     );
 
@@ -116,8 +122,12 @@ const SelectApiSourceFormField: FC<SelectProps> = ({ field, initialValue }) => {
 
 type CheckboxProps = {
   field: CheckboxApiSourceField;
+  initialChecked: boolean;
 };
-const CheckboxApiSourceFormField: FC<CheckboxProps> = ({ field }) => {
+const CheckboxApiSourceFormField: FC<CheckboxProps> = ({
+  field,
+  initialChecked,
+}) => {
   const { label, name, apiSourceKey } = field;
 
   return (
@@ -125,6 +135,7 @@ const CheckboxApiSourceFormField: FC<CheckboxProps> = ({ field }) => {
       label={label}
       name={[apiSourceKey, name]}
       valuePropName="checked"
+      initialValue={initialChecked}
     >
       <Checkbox></Checkbox>
     </Form.Item>
