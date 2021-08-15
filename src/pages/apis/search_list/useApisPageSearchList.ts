@@ -3,32 +3,27 @@ import { useEffect, useMemo, useState } from 'react';
 import { ApiSourcesMap } from 'api_sources';
 
 import useSubmit from 'utils/useSubmit';
+import usePersist from 'utils/usePersist';
 
 import SEARCH_FIELDS_LOCAL_STORAGE_KEY from '../search_fields_key';
 
 const useApisPageSearchList = (apiSourceKey: string) => {
   const apiSource = useMemo(() => ApiSourcesMap[apiSourceKey], [apiSourceKey]);
 
-  const persistedQuery = localStorage.getItem(SEARCH_FIELDS_LOCAL_STORAGE_KEY);
-  const savedQuery = persistedQuery ? JSON.parse(persistedQuery) : {};
-
   const [totalCount, setTotalCount] = useState<number>();
   const [items, setItems] = useState<Array<any>>([]);
 
-  const [query, setQuery] = useState<any>(savedQuery);
-
-  const [page, setPage] = useState<number>(savedQuery.page || 1);
-  const [pageSize, setPageSize] = useState<number>(
-    savedQuery.pageSize || apiSource.defaultPageSize || 25
+  const [query, setQuery, initialQuery] = usePersist<{ [key: string]: any }>(
+    {
+      page: 1,
+      pageSize: apiSource.defaultPageSize || 25,
+    },
+    SEARCH_FIELDS_LOCAL_STORAGE_KEY
   );
 
   const { submit, loading, done } = useSubmit(
     async () => {
-      const queryResult = await apiSource.search({
-        ...query,
-        page,
-        pageSize,
-      });
+      const queryResult = await apiSource.search(query);
       return queryResult;
     },
     (queryResult) => {
@@ -44,34 +39,28 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const newQuery = {
+  const filter = (newQuery: any) => {
+    setQuery((query) => ({
       ...query,
-      page,
-      pageSize,
-    };
+      ...newQuery[apiSourceKey],
+      page: 1,
+    }));
 
-    localStorage.setItem(
-      SEARCH_FIELDS_LOCAL_STORAGE_KEY,
-      JSON.stringify(newQuery)
-    );
-  }, [page, pageSize, query]);
-
-  const filter = (query: any) => {
-    setQuery(query[apiSourceKey]);
-    setPage(1);
     submit();
   };
 
   const repaginate = (pageSize: number | undefined) => (page: number) => {
-    setPage(page);
-    if (pageSize) setPageSize(pageSize);
+    setQuery((query) => ({
+      ...query,
+      page,
+      pageSize: pageSize || query.pageSize,
+    }));
 
     submit();
   };
 
   return {
-    initialQuery: savedQuery,
+    initialQuery,
 
     fields: apiSource.apiFields,
 
@@ -87,8 +76,8 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     loading,
     done,
 
-    page,
-    pageSize,
+    page: query.page,
+    pageSize: query.pageSize,
     pagesSize: apiSource.pageSizes || [],
     hidePagination: !apiSource.pageSizes,
     repaginate,
