@@ -10,6 +10,15 @@ import ApiSourceCheckedFields from 'api_sources/ApiSourceCheckedFields';
 
 import FavoriteButton from 'components/favorite_button/FavoriteButton';
 
+import usePersist from 'utils/usePersist';
+
+type CheckboxFields = {
+  [apiSourceKey: string]: { [field: string]: boolean };
+};
+type FilterFields = {
+  [apiSourceKey: string]: { [field: string]: string };
+};
+
 type Props = {
   favoritesList: Array<any>;
   favoriteApiSourceKeys: Array<string>;
@@ -23,9 +32,8 @@ const FavoritesList: FC<Props> = ({
   done,
   loading,
 }) => {
-  const [checkedFields, setCheckedFields] = useState<{
-    [apiSourceKey: string]: { [field: string]: string };
-  }>({});
+  const [checkedFields, setCheckedFields, initialCheckedFields] =
+    usePersist<CheckboxFields>({}, 'favorites-checkbox');
   const isAnyFieldChecked = useMemo(() => {
     for (const apiSourceKey of Object.keys(checkedFields))
       for (const key of Object.keys(checkedFields[apiSourceKey]))
@@ -34,9 +42,10 @@ const FavoritesList: FC<Props> = ({
     return false;
   }, [checkedFields]);
 
-  const [filters, setFilters] = useState<{
-    [apiSourceKey: string]: { [field: string]: string };
-  }>({});
+  const [filters, setFilters] = usePersist<FilterFields>(
+    {},
+    'favorites-search'
+  );
   const [filteredItems, setFilteredItems] = useState<Array<any>>(favoritesList);
 
   const size = favoritesList.length;
@@ -65,9 +74,7 @@ const FavoritesList: FC<Props> = ({
     );
   }, [favoritesList, filters, isAnyFieldChecked, checkedFields]);
 
-  const onFilter = (form: {
-    [apiSourceKey: string]: { [field: string]: string };
-  }) => setFilters(form);
+  const onFilter = (form: FilterFields) => setFilters(form);
 
   return (
     <>
@@ -98,6 +105,7 @@ const FavoritesList: FC<Props> = ({
                 <Fragment key={apiSourceKey}>
                   <ApiSourceCheckboxes
                     apiSourceKey={apiSourceKey}
+                    initialCheckedFields={initialCheckedFields[apiSourceKey]}
                   ></ApiSourceCheckboxes>
                 </Fragment>
               );
@@ -116,6 +124,7 @@ const FavoritesList: FC<Props> = ({
                   <ApiSourceCheckedFields
                     apiSourceKey={apiSourceKey}
                     checkedFields={checkedFields[apiSourceKey]}
+                    initialSearchFields={filters[apiSourceKey]}
                   ></ApiSourceCheckedFields>
                 </Fragment>
               );

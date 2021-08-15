@@ -8,8 +8,12 @@ import ApiSourceFormField from './ApiSourceFormField';
 
 type Props = {
   apiSourceKey: string;
+  initialCheckedFields?: { [key: string]: boolean };
 };
-const ApiSourceCheckboxes: FC<Props> = ({ apiSourceKey }) => {
+const ApiSourceCheckboxes: FC<Props> = ({
+  apiSourceKey,
+  initialCheckedFields = {},
+}) => {
   const apiSource = ApiSourcesMap[apiSourceKey];
 
   if (!apiSource) {
@@ -29,7 +33,10 @@ const ApiSourceCheckboxes: FC<Props> = ({ apiSourceKey }) => {
         {apiSource.favoriteFields.map((field) => {
           return (
             <Col key={field.name}>
-              <ApiSourceFormField field={field}></ApiSourceFormField>
+              <ApiSourceFormField
+                field={field}
+                initialChecked={initialCheckedFields[field.name]}
+              ></ApiSourceFormField>
             </Col>
           );
         })}

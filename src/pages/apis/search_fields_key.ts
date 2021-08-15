@@ -1,3 +1,3 @@
-const SEARCH_FIELDS_LOCAL_STORAGE_KEY = 'search';
+const SEARCH_FIELDS_LOCAL_STORAGE_KEY = 'apis-search';
 
 export default SEARCH_FIELDS_LOCAL_STORAGE_KEY;
