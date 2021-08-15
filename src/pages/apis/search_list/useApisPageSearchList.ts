@@ -4,6 +4,7 @@ import { ApiSourcesMap } from 'api_sources';
 
 import useSubmit from 'utils/useSubmit';
 import usePersist from 'utils/usePersist';
+import delayed from 'utils/delayed';
 
 import SEARCH_FIELDS_LOCAL_STORAGE_KEY from '../search_fields_key';
 
@@ -21,9 +22,9 @@ const useApisPageSearchList = (apiSourceKey: string) => {
     SEARCH_FIELDS_LOCAL_STORAGE_KEY
   );
 
-  const { submit, loading, done } = useSubmit(
+  const { submit, loading, done, failed } = useSubmit(
     async () => {
-      const queryResult = await apiSource.search(query);
+      const queryResult = await delayed(apiSource.search(query));
       return queryResult;
     },
     (queryResult) => {
@@ -75,6 +76,8 @@ const useApisPageSearchList = (apiSourceKey: string) => {
 
     loading,
     done,
+    failed,
+    retry: submit,
 
     page: query.page,
     pageSize: query.pageSize,

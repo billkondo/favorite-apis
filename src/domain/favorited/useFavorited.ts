@@ -10,10 +10,11 @@ const useFavorited = () => {
 
     isFavorited,
     favoriteItem,
+    getFavoritedList,
 
     done,
-
     loading,
+    failed,
   } = useContext(FavoritedContext);
 
   return {
@@ -23,9 +24,11 @@ const useFavorited = () => {
 
     isFavorited: isFavorited!,
     favoriteItem: favoriteItem!,
+    getFavoritedList,
 
     done,
     loading,
+    failed,
   };
 };
 

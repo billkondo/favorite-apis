@@ -1,6 +1,5 @@
 import { FC, Fragment, useEffect, useMemo, useState } from 'react';
-import { Button, Divider, Form, Row, Spin } from 'antd';
-import Title from 'antd/lib/typography/Title';
+import { Button, Divider, Form, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -22,15 +21,10 @@ type FilterFields = {
 type Props = {
   favoritesList: Array<any>;
   favoriteApiSourceKeys: Array<string>;
-
-  done: boolean;
-  loading: boolean;
 };
 const FavoritesList: FC<Props> = ({
   favoritesList = [],
   favoriteApiSourceKeys = [],
-  done,
-  loading,
 }) => {
   const [checkedFields, setCheckedFields, initialCheckedFields] =
     usePersist<CheckboxFields>({}, 'favorites-checkbox');
@@ -78,100 +72,82 @@ const FavoritesList: FC<Props> = ({
 
   return (
     <>
-      <Row style={{ marginBottom: 24 }}>
-        <Title level={2}>Your favorite items</Title>
+      <Row>
+        <Text>
+          You have <b>{size}</b> favorited items
+        </Text>
       </Row>
 
-      {loading && (
-        <Row style={{ padding: 4 }}>
-          <Spin size="large"></Spin>
-        </Row>
-      )}
+      <Form
+        style={{ marginTop: 24 }}
+        onValuesChange={(_, values) => setCheckedFields(values)}
+      >
+        {favoriteApiSourceKeys.map((apiSourceKey) => {
+          return (
+            <Fragment key={apiSourceKey}>
+              <ApiSourceCheckboxes
+                apiSourceKey={apiSourceKey}
+                initialCheckedFields={initialCheckedFields[apiSourceKey]}
+              ></ApiSourceCheckboxes>
+            </Fragment>
+          );
+        })}
+      </Form>
 
-      {done && (
-        <>
-          <Row style={{ padding: 4 }}>
-            <Text>
-              You have <b>{size}</b> favorited items
-            </Text>
-          </Row>
+      <Form
+        layout="inline"
+        style={{ marginTop: 24 }}
+        hidden={!isAnyFieldChecked}
+        onFinish={onFilter}
+      >
+        {favoriteApiSourceKeys.map((apiSourceKey) => {
+          return (
+            <Fragment key={apiSourceKey}>
+              <ApiSourceCheckedFields
+                apiSourceKey={apiSourceKey}
+                checkedFields={checkedFields[apiSourceKey]}
+                initialSearchFields={filters[apiSourceKey]}
+              ></ApiSourceCheckedFields>
+            </Fragment>
+          );
+        })}
 
-          <Form
-            style={{ padding: 4, marginTop: 24 }}
-            onValuesChange={(_, values) => setCheckedFields(values)}
-          >
-            {favoriteApiSourceKeys.map((apiSourceKey) => {
-              return (
-                <Fragment key={apiSourceKey}>
-                  <ApiSourceCheckboxes
-                    apiSourceKey={apiSourceKey}
-                    initialCheckedFields={initialCheckedFields[apiSourceKey]}
-                  ></ApiSourceCheckboxes>
-                </Fragment>
-              );
-            })}
-          </Form>
+        <Form.Item>
+          <Button
+            htmlType="submit"
+            type="primary"
+            shape="circle"
+            icon={<SearchOutlined />}
+          ></Button>
+        </Form.Item>
+      </Form>
 
-          <Form
-            layout="inline"
-            style={{ padding: 4, marginTop: 24 }}
-            hidden={!isAnyFieldChecked}
-            onFinish={onFilter}
-          >
-            {favoriteApiSourceKeys.map((apiSourceKey) => {
-              return (
-                <Fragment key={apiSourceKey}>
-                  <ApiSourceCheckedFields
-                    apiSourceKey={apiSourceKey}
-                    checkedFields={checkedFields[apiSourceKey]}
-                    initialSearchFields={filters[apiSourceKey]}
-                  ></ApiSourceCheckedFields>
-                </Fragment>
-              );
-            })}
+      <Row style={{ marginTop: 40 }}>
+        <Text>
+          <b>Filtered Results:</b> {filteredItems.length}
+        </Text>
+      </Row>
 
-            <Form.Item>
-              <Button
-                loading={loading}
-                htmlType="submit"
-                type="primary"
-                shape="circle"
-                icon={<SearchOutlined />}
-              ></Button>
-            </Form.Item>
-          </Form>
+      {filteredItems.map((item) => {
+        const apiSource = ApiSourcesMap[item.key];
 
-          <Row style={{ padding: 4, marginTop: 40 }}>
-            <Text>
-              <b>Filtered Results:</b> {filteredItems.length}
-            </Text>
-          </Row>
+        if (!apiSource) {
+          console.warn('favorited item without api key');
+          return <></>;
+        }
 
-          {filteredItems.map((item) => {
-            const apiSource = ApiSourcesMap[item.key];
+        return (
+          <div key={item.id} style={{ marginTop: 40, position: 'relative' }}>
+            <FavoriteButton id={item.id} item={item}></FavoriteButton>
 
-            if (!apiSource) {
-              console.warn('favorited item without api key');
-              return <></>;
-            }
+            <Row>{apiSource.renderItem(item)}</Row>
 
-            return (
-              <div
-                key={item.id}
-                style={{ padding: 4, marginTop: 40, position: 'relative' }}
-              >
-                <FavoriteButton id={item.id} item={item}></FavoriteButton>
-
-                <Row>{apiSource.renderItem(item)}</Row>
-
-                <Row>
-                  <Divider></Divider>
-                </Row>
-              </div>
-            );
-          })}
-        </>
-      )}
+            <Row>
+              <Divider></Divider>
+            </Row>
+          </div>
+        );
+      })}
     </>
   );
 };
