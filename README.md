@@ -1,6 +1,6 @@
 # Favorites API
 
-This is a Single Page Application where you can see items from a api source and favorite them
+A Single Page Application where you can see items from different api sources and favorite them
 
 ## Technical decisions
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) in order to avoid extra configurations
